@@ -62,12 +62,18 @@ export class USDAProjectOverviewView {
                 </div>
               </div>
             </div>
-            <div class="hero-actions-flex">
-              <button class="btn-glass-primary" id="btn-overview-ai-copilot">
-                ${getIcon('sparkles', '', 16)} AI Project Workflow
+            <div class="hero-actions-flex" style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
+              <button class="btn-glass-primary" id="btn-overview-edit-info" title="Enter or edit borrower, parcel, and cost data">
+                ${getIcon('overview', '', 15)} Edit Project Info
               </button>
-              <button class="btn-glass-secondary" id="btn-overview-download-brief">
-                ${getIcon('download', '', 16)} Export Project Brief PDF
+              <button class="btn-glass-primary" id="btn-overview-run-ai" title="Autonomous AI Underwriting & Lifecycle Engine" style="background: linear-gradient(135deg, rgba(5,150,105,0.18), rgba(16,185,129,0.28)); border-color: rgba(5,150,105,0.45); color: #047857;">
+                ${getIcon('sparkles', '', 15)} Run Project Through AI
+              </button>
+              <button class="btn-glass-secondary" id="btn-overview-download-brief" title="Download Form RD 3555-SC Dossier PDF directly">
+                ${getIcon('download', '', 15)} Download PDF Dossier
+              </button>
+              <button class="btn-glass-secondary" id="btn-overview-download-pack" title="Download Complete 14-PDF Deliverables & Books Pack">
+                ${getIcon('download', '', 15)} All 14 PDFs & Books Pack
               </button>
             </div>
           </div>
@@ -381,9 +387,36 @@ export class USDAProjectOverviewView {
       this.attachEvents();
     });
 
+    document.getElementById('btn-overview-edit-info')?.addEventListener('click', () => {
+      if (window.usdaProjectIntake) {
+        window.usdaProjectIntake.toggle(true);
+      }
+    });
+
+    document.getElementById('btn-overview-run-ai')?.addEventListener('click', () => {
+      if (window.usdaProjectRunner) {
+        window.usdaProjectRunner.toggle(true);
+      }
+    });
+
+    document.getElementById('btn-overview-download-brief')?.addEventListener('click', () => {
+      if (window.usdaPdfEngine) {
+        window.usdaPdfEngine.downloadPDF('dossier');
+      } else {
+        jump('documents');
+      }
+    });
+
+    document.getElementById('btn-overview-download-pack')?.addEventListener('click', () => {
+      if (window.usdaPdfEngine) {
+        window.usdaPdfEngine.downloadAllDocumentsPack();
+      } else {
+        jump('documents');
+      }
+    });
+
     document.getElementById('btn-overview-ai-copilot')?.addEventListener('click', () => jump('ai-workspace'));
     document.getElementById('btn-overview-take-action')?.addEventListener('click', () => jump('compliance'));
-    document.getElementById('btn-overview-download-brief')?.addEventListener('click', () => jump('documents'));
 
     // Module Card Jumps
     document.getElementById('card-nav-feasibility')?.addEventListener('click', () => jump('map-radar'));

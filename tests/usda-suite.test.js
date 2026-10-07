@@ -5,6 +5,7 @@ import assert from 'node:assert/strict';
 import { test, describe } from 'node:test';
 import { GEORGIA_REGIONS, USDA_DEDUCTION_RULES, USDA_CONSTRUCTION_PARAMS } from '../data/georgia-counties.js';
 import { SECRET_HOTSPOTS, USDA_REGULATORY_SECRETS } from '../data/secret-locations.js';
+import { OFFICIAL_DOCUMENTS } from '../js/pdf-engine.js';
 
 describe('1. Regional Jurisdiction & 2026 Income Caps', () => {
   test('Dawson County has correct Atlanta MSA 2026 caps ($135,500 / $178,900)', () => {
@@ -337,6 +338,30 @@ describe('13. Headless REST API Gateway & Federal Integration Endpoints', () => 
     assert.equal(postData.success, true);
     assert.equal(postData.response.targetTab, 'map-radar');
     assert.ok(postData.response.citation.includes('7 CFR § 3555'));
+  });
+});
+
+describe('14. Institutional Documents, Official Forms & Books Suite', () => {
+  test('Contains all 14 official USDA statutory forms, deliverables, and technical handbooks', () => {
+    assert.equal(OFFICIAL_DOCUMENTS.length, 14);
+    const formIds = OFFICIAL_DOCUMENTS.map(d => d.id);
+    assert.ok(formIds.includes('dossier'), 'Must include Form RD 3555-SC');
+    assert.ok(formIds.includes('hb-3555'), 'Must include HB-1-3555 Field Guide');
+    assert.ok(formIds.includes('rd-3555-21'), 'Must include Form RD 3555-21');
+    assert.ok(formIds.includes('rd-1940-20'), 'Must include Form RD 1940-20');
+    assert.ok(formIds.includes('rd-1924-18'), 'Must include Form RD 1924-18');
+    assert.ok(formIds.includes('rd-1924-19'), 'Must include Form RD 1924-19');
+    assert.ok(formIds.includes('brief'), 'Must include Structured Project Brief');
+    assert.ok(formIds.includes('cfr-3555'), 'Must include 7 CFR § 3555 Rulebook');
+    assert.ok(formIds.includes('ga-codes'), 'Must include GA Codes Guide');
+  });
+
+  test('All documents have valid official docCodes and designated preparers', () => {
+    OFFICIAL_DOCUMENTS.forEach(doc => {
+      assert.ok(doc.docCode && doc.docCode.length > 2, `${doc.id} must have valid docCode`);
+      assert.ok(doc.preparer && doc.preparer.length > 2, `${doc.id} must have preparer`);
+      assert.ok(['forms', 'deliverables', 'books'].includes(doc.category), `${doc.id} must have valid category`);
+    });
   });
 });
 

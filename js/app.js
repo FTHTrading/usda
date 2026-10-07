@@ -1,4 +1,3 @@
-// Master Application Controller: Connected Building-Project Operating Platform
 import { USDAProjectOverviewView } from './project-overview-view.js';
 import { USDADesignCoordinationView } from './design-coordination-view.js';
 import { USDAComplianceMatrixView } from './compliance-matrix-view.js';
@@ -21,12 +20,16 @@ import { USDAIncomeEngine } from './income-engine.js';
 import { USDAFeasibilityMatrix } from './feasibility.js';
 import { USDAHotspots } from './hotspots.js';
 import { USDAGuidedAINavigator } from './guided-ai-navigator.js';
+import { USDAProjectIntakeModal } from './project-intake-modal.js';
+import { USDAAIProjectRunner } from './ai-project-runner.js';
 
 class USDAApp {
   constructor() {
     this.activeTab = 'overview';
     this.modules = {};
     this.guidedNavigator = null;
+    this.intakeModal = null;
+    this.aiRunner = null;
     this.init();
   }
 
@@ -63,8 +66,15 @@ class USDAApp {
     // 5. Interactive USDA AI Guided Navigator & Copilot
     this.guidedNavigator = new USDAGuidedAINavigator();
 
+    // 6. Interactive Project Intake Modal & Autonomous Full-Project Runner
+    this.intakeModal = new USDAProjectIntakeModal();
+    this.aiRunner = new USDAAIProjectRunner();
+    window.usdaProjectIntake = this.intakeModal;
+    window.usdaProjectRunner = this.aiRunner;
+
     this.bindNavigation();
     this.bindGlobalSearch();
+    this.bindGlobalButtons();
     console.log("USDA 3FS Building-Project Operating Platform initialized.");
   }
 
@@ -151,6 +161,53 @@ class USDAApp {
 
     // Scroll to top smoothly
     window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  bindGlobalButtons() {
+    // 1. Global Header "Download PDF" button -> Generates Form RD 3555-SC Dossier
+    const globalPdfBtn = document.getElementById('btn-global-quick-pdf');
+    if (globalPdfBtn) {
+      globalPdfBtn.addEventListener('click', (e) => {
+        e.preventDefault();
+        if (this.modules.pdfEngine) {
+          this.modules.pdfEngine.downloadPDF('dossier');
+        } else {
+          this.switchTab('documents');
+        }
+      });
+    }
+
+    // 2. Global Header "AI System Guide" button -> Toggles AI Guided Navigator
+    const aiGuideBtn = document.getElementById('btn-open-ai-guide');
+    if (aiGuideBtn) {
+      aiGuideBtn.addEventListener('click', (e) => {
+        e.preventDefault();
+        if (this.guidedNavigator) {
+          this.guidedNavigator.toggle();
+        }
+      });
+    }
+
+    // 3. Global Keyboard Shortcuts
+    window.addEventListener('keydown', (e) => {
+      // ⌘J or Ctrl+J -> AI Navigator
+      if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'j') {
+        e.preventDefault();
+        if (this.guidedNavigator) this.guidedNavigator.toggle();
+      }
+      // ⌘E or Ctrl+E -> Edit Project Info Intake Modal
+      if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'e') {
+        e.preventDefault();
+        if (this.intakeModal) this.intakeModal.toggle(true);
+      }
+    });
+
+    // 4. Listen for project update event to refresh views
+    window.addEventListener('usda-project-updated', () => {
+      if (this.modules.overview?.render) this.modules.overview.render();
+      if (this.modules.pdfEngine?.render) this.modules.pdfEngine.render();
+      if (this.modules.calcSuite?.render) this.modules.calcSuite.render();
+    });
   }
 }
 

@@ -2894,4 +2894,351 @@ body {
   line-height: 1.4;
 }
 
+/* ========================================================
+   PROJECT INTAKE MODAL & LIVE EDITOR
+   ======================================================== */
+
+.intake-modal-backdrop,
+.runner-modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(15, 23, 42, 0.45);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  z-index: 1050;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.25s ease;
+}
+
+.intake-modal-backdrop.open,
+.runner-modal-backdrop.open {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.intake-modal-window,
+.runner-modal-window {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -46%) scale(0.97);
+  width: 720px;
+  max-width: 95vw;
+  max-height: 90vh;
+  background: rgba(255, 255, 255, 0.96);
+  backdrop-filter: blur(28px);
+  -webkit-backdrop-filter: blur(28px);
+  border: 1px solid rgba(226, 232, 240, 0.9);
+  border-radius: var(--radius-lg);
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.16);
+  z-index: 1060;
+  opacity: 0;
+  pointer-events: none;
+  transition: all 0.28s cubic-bezier(0.16, 1, 0.3, 1);
+  display: flex;
+  flex-direction: column;
+}
+
+.intake-modal-window.open,
+.runner-modal-window.open {
+  transform: translate(-50%, -50%) scale(1);
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.intake-modal-header,
+.runner-header {
+  padding: 1.25rem 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid var(--glass-border);
+  background: rgba(255, 255, 255, 0.9);
+}
+
+.intake-icon-crest,
+.runner-badge-crest {
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+  background: #f8fafc;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04);
+}
+
+.intake-tabs-bar {
+  display: flex;
+  border-bottom: 1px solid var(--glass-border);
+  background: #f8fafc;
+  padding: 0 1rem;
+  overflow-x: auto;
+}
+
+.intake-tab-btn {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0.75rem 1rem;
+  background: transparent;
+  border: none;
+  border-bottom: 2px solid transparent;
+  font-family: var(--font-sans);
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: var(--text-muted);
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all 0.2s;
+}
+
+.intake-tab-btn:hover {
+  color: var(--text-primary);
+}
+
+.intake-tab-btn.active {
+  color: #065f46;
+  border-bottom-color: var(--emerald);
+  background: #ffffff;
+}
+
+.intake-modal-body {
+  flex: 1;
+  overflow-y: auto;
+  padding: 1.25rem 1.5rem;
+  display: flex;
+  flex-direction: column;
+}
+
+.intake-pane {
+  display: none;
+}
+
+.intake-pane.active {
+  display: block;
+}
+
+.intake-grid-2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+
+.intake-grid-3 {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.85rem;
+}
+
+.intake-divider {
+  font-size: 0.72rem;
+  font-weight: 800;
+  color: var(--text-dim);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin: 1.25rem 0 0.85rem;
+  padding-bottom: 0.35rem;
+  border-bottom: 1px solid var(--glass-border);
+}
+
+.intake-modal-footer,
+.runner-footer {
+  padding: 1rem 1.5rem;
+  border-top: 1px solid var(--glass-border);
+  background: #f8fafc;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+/* ========================================================
+   AUTONOMOUS AI PROJECT RUNNER STYLES
+   ======================================================== */
+
+.runner-status-strip {
+  padding: 1rem 1.5rem;
+  background: #f1f5f9;
+  border-bottom: 1px solid var(--glass-border);
+}
+
+.runner-progress-track {
+  height: 8px;
+  background: #e2e8f0;
+  border-radius: 4px;
+  overflow: hidden;
+  margin-bottom: 0.5rem;
+}
+
+.runner-progress-bar {
+  height: 100%;
+  background: linear-gradient(90deg, #059669 0%, #10b981 100%);
+  border-radius: 4px;
+  transition: width 0.4s ease;
+}
+
+.runner-meta-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 0.78rem;
+  color: var(--text-secondary);
+}
+
+.runner-timer {
+  font-family: var(--font-mono);
+  font-weight: 700;
+  color: var(--emerald);
+}
+
+.runner-stages-list {
+  flex: 1;
+  overflow-y: auto;
+  padding: 1rem 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.runner-stage-card {
+  display: flex;
+  gap: 0.85rem;
+  background: #ffffff;
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-md);
+  padding: 0.95rem 1.15rem;
+  transition: all 0.25s ease;
+}
+
+.runner-stage-card.active-processing {
+  border-color: var(--emerald);
+  box-shadow: 0 0 0 3px rgba(5, 150, 105, 0.15);
+  background: #f0fdf4;
+}
+
+.runner-stage-card.stage-finished {
+  border-color: rgba(5, 150, 105, 0.35);
+  background: #ffffff;
+}
+
+.stage-num-badge {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: #f1f5f9;
+  color: var(--text-muted);
+  font-weight: 800;
+  font-size: 0.75rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.runner-stage-card.active-processing .stage-num-badge {
+  background: var(--emerald);
+  color: #ffffff;
+}
+
+.runner-stage-card.stage-finished .stage-num-badge {
+  background: #064e3b;
+  color: #ffffff;
+}
+
+.stage-card-info {
+  flex: 1;
+}
+
+.stage-title-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 0.25rem;
+}
+
+.stage-title-row h4 {
+  font-size: 0.88rem;
+  font-weight: 800;
+  color: #0f172a;
+  margin: 0;
+}
+
+.stage-state-pill {
+  font-size: 0.65rem;
+  font-weight: 800;
+  padding: 0.15rem 0.5rem;
+  border-radius: var(--radius-full);
+  background: #f1f5f9;
+  color: var(--text-dim);
+  font-family: var(--font-mono);
+}
+
+.stage-state-pill.in-progress {
+  background: rgba(245, 158, 11, 0.15);
+  color: #b45309;
+}
+
+.stage-state-pill.completed {
+  background: rgba(5, 150, 105, 0.15);
+  color: #047857;
+}
+
+.stage-card-info p {
+  font-size: 0.76rem;
+  color: var(--text-dim);
+  margin: 0;
+  line-height: 1.45;
+}
+
+.stage-telemetry-output {
+  margin-top: 0.6rem;
+  padding: 0.6rem 0.85rem;
+  background: #0f172a;
+  color: #34d399;
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  line-height: 1.5;
+  border-radius: 6px;
+  white-space: pre-wrap;
+  animation: fadeIn 0.2s ease;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(4px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* ========================================================
+   TOAST NOTIFICATION NOTICES
+   ======================================================== */
+
+.usda-toast-notice {
+  position: fixed;
+  bottom: 2rem;
+  left: 50%;
+  transform: translateX(-50%) translateY(20px);
+  background: #0f172a;
+  color: #ffffff;
+  padding: 0.75rem 1.25rem;
+  border-radius: var(--radius-full);
+  font-size: 0.82rem;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+  z-index: 9999;
+  opacity: 0;
+  pointer-events: none;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.usda-toast-notice.visible {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+}
+
+
 
