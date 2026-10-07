@@ -72,8 +72,8 @@ export class USDAProjectOverviewView {
               <button class="btn-glass-secondary" id="btn-overview-download-brief" title="Download Form RD 3555-SC Dossier PDF directly">
                 ${getIcon('download', '', 15)} Download PDF Dossier
               </button>
-              <button class="btn-glass-secondary" id="btn-overview-download-pack" title="Download Complete 14-PDF Deliverables & Books Pack">
-                ${getIcon('download', '', 15)} All 14 PDFs & Books Pack
+              <button class="btn-glass-secondary" id="btn-overview-download-pack" title="Download Complete 18-PDF Deliverables & Books Pack">
+                ${getIcon('download', '', 15)} All 18 PDFs & Books Pack
               </button>
             </div>
           </div>

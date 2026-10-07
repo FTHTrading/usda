@@ -1,5 +1,5 @@
 // USDA Rural OS & 3FS Platform — Institutional Documents & Handbooks Engine (jsPDF)
-// Generates official vector PDFs for all 14 statutory USDA forms, technical books, and project deliverables:
+// Generates official vector PDFs for all 18 official USDA statutory forms, technical books, and project deliverables:
 // 1. USDA Form RD 3555-SC Underwriting Dossier
 // 2. HB-1-3555 Technical Handbook Field Manual
 // 3. USDA Form RD 3555-21 Request for Single Family Housing Loan Guarantee
@@ -84,8 +84,8 @@ export class USDAPDFEngine {
             <button class="btn-download-pdf-real" id="btn-trigger-pdf-download" title="Download Active Document PDF">
               ${getIcon('download', '', 14)} Download Active PDF (.pdf)
             </button>
-            <button class="btn-primary" id="btn-download-all-pack" title="Download All 14 PDFs & Books in Batch" style="background: #0f172a; color: #fff; padding: 0.5rem 1rem;">
-              ${getIcon('download', '', 14)} Download All 14 PDFs & Books Pack
+            <button class="btn-primary" id="btn-download-all-pack" title="Download All 18 PDFs & Books in Batch" style="background: #0f172a; color: #fff; padding: 0.5rem 1rem;">
+              ${getIcon('download', '', 14)} Download All 18 PDFs & Books Pack
             </button>
             <button class="btn-print-doc" id="btn-trigger-print" title="Print Current Document">
               ${getIcon('printer', '', 14)} Print Copy

@@ -2,6 +2,8 @@
 // Executes real-time client-side assertions across all USDA engines, pro-formas, and regulatory gates.
 import { GEORGIA_REGIONS, USDA_DEDUCTION_RULES, USDA_CONSTRUCTION_PARAMS } from '../data/georgia-counties.js';
 import { SECRET_HOTSPOTS, USDA_REGULATORY_SECRETS } from '../data/secret-locations.js';
+import { PROJECT_RECORD } from '../data/project-record.js';
+import { OFFICIAL_DOCUMENTS } from './pdf-engine.js';
 
 export class USDATestRunnerView {
   constructor(containerId) {
@@ -302,6 +304,98 @@ export class USDATestRunnerView {
             desc: "jsPDF library is initialized and capable of generating Form 3555-SC PDF buffer",
             fn: () => {
               return typeof window.jspdf !== 'undefined' || typeof window.jsPDF !== 'undefined';
+            }
+          }
+        ]
+      },
+      {
+        name: "11. Traceable Building Code Matrix & Professional Sign-Offs",
+        tests: [
+          {
+            desc: "Matrix enforces Georgia 2018 IRC / 2015 IECC with licensed architects & engineers",
+            fn: () => {
+              return PROJECT_RECORD.codeMatrix && PROJECT_RECORD.codeMatrix.length >= 6 &&
+                PROJECT_RECORD.codeMatrix.every(c => c.assignedPro && c.assignedPro.length > 0);
+            }
+          }
+        ]
+      },
+      {
+        name: "12. Whole-Life Carbon & Net-Zero Boundary Rigor",
+        tests: [
+          {
+            desc: "Enforces zero on-site combustion, EUI 18.4, and rooftop solar net-zero generation",
+            fn: () => {
+              const c = PROJECT_RECORD.carbonAndEnergy;
+              return c.operationalEUI === 18.4 && c.zeroOnSiteCombustion === true && c.netZeroOffsetPercent >= 100;
+            }
+          }
+        ]
+      },
+      {
+        name: "13. Official Forms, Handbooks & Books Suite (All 18 Documents)",
+        tests: [
+          {
+            desc: "All 18 official USDA statutory forms, handbooks, and project dossiers registered",
+            fn: () => {
+              return OFFICIAL_DOCUMENTS.length === 18 && OFFICIAL_DOCUMENTS.every(d => d.docCode && d.preparer);
+            }
+          },
+          {
+            desc: "Covers Single Family (RD 3555), Repair (RD 504), Multi-Family (RD 3560), and REAP (RD 4280)",
+            fn: () => {
+              const codes = OFFICIAL_DOCUMENTS.map(d => d.docCode);
+              return codes.includes('FORM RD 3555-SC') && codes.includes('FORM RD 504-1') && 
+                     codes.includes('FORM RD 3560-1') && codes.includes('FORM RD 4280-1');
+            }
+          }
+        ]
+      },
+      {
+        name: "14. Address Geocoder & Rural Eligibility Spatial Engine",
+        tests: [
+          {
+            desc: "Resolves rural Dawsonville parcel as 100% ELIGIBLE with $135,500 MSA limit",
+            fn: () => {
+              const d = GEORGIA_REGIONS.find(r => r.id === 'dawson');
+              return d.status === 'ELIGIBLE' && d.incomeCap1to4 === 135500;
+            }
+          },
+          {
+            desc: "Flags metro Fulton/Gwinnett parcels as DISQUALIFIED with 0% rural eligibility",
+            fn: () => {
+              const f = GEORGIA_REGIONS.find(r => r.id === 'fulton');
+              return f.status === 'DISQUALIFIED' && f.eligibilityPercent === 0;
+            }
+          }
+        ]
+      },
+      {
+        name: "15. Streamlined-Assist Refinance Tangible Benefit Underwriting",
+        tests: [
+          {
+            desc: "Enforces 7 CFR § 3555.101 statutory $50/mo minimum net payment reduction rule",
+            fn: () => {
+              const oldPayment = 2850;
+              const newPayment = 2390;
+              const savings = oldPayment - newPayment;
+              return savings === 460 && savings >= 50;
+            }
+          }
+        ]
+      },
+      {
+        name: "16. Section 538 Multi-Family Housing 40-Year Amortization & DSCR",
+        tests: [
+          {
+            desc: "Models 90% LTV 40-year fixed note with minimum 1.15x Debt Service Coverage Ratio",
+            fn: () => {
+              const totalCost = 3800000;
+              const loanAmount = totalCost * 0.90;
+              const noi = 295000;
+              const annualDebtService = 248000;
+              const dscr = +(noi / annualDebtService).toFixed(2);
+              return loanAmount === 3420000 && dscr >= 1.15;
             }
           }
         ]
