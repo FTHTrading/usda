@@ -128,8 +128,8 @@ const server = http.createServer(async (req, res) => {
     try {
       const payload = await parseBody(req);
       const grossIncome = Number(payload.grossIncome) || 0;
-      const numDependents = Number(payload.numDependents) || 0;
-      const childcareExpenses = Number(payload.childcareExpenses) || 0;
+      const numDependents = Number(payload.numDependents !== undefined ? payload.numDependents : payload.dependents) || 0;
+      const childcareExpenses = Number(payload.childcareExpenses !== undefined ? payload.childcareExpenses : payload.childcare) || 0;
       const isElderly = Boolean(payload.isElderly);
       const medicalExpenses = Number(payload.medicalExpenses) || 0;
       const countyId = payload.countyId || 'dawson';
