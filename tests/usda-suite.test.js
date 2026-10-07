@@ -259,4 +259,65 @@ describe('12. Carbon & Net-Zero Boundary Rigor (DOE ZEB & Embodied LCA)', () => 
   });
 });
 
+describe('13. Headless REST API Gateway & Federal Integration Endpoints', () => {
+  const BASE_URL = 'http://localhost:4080';
+
+  test('GET /api/v1/health returns healthy system status and statutory reference', async () => {
+    const res = await fetch(`${BASE_URL}/api/v1/health`);
+    assert.equal(res.status, 200);
+    const data = await res.json();
+    assert.equal(data.status, 'HEALTHY');
+    assert.equal(data.version, '2.4.0');
+    assert.ok(data.standard.includes('7 CFR § 3555'));
+  });
+
+  test('POST /api/v1/income-check accurately audits statutory childcare and dependent deductions', async () => {
+    const res = await fetch(`${BASE_URL}/api/v1/income-check`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        grossIncome: 142000,
+        numDependents: 2,
+        childcareExpenses: 12000,
+        countyId: 'dawson'
+      })
+    });
+    assert.equal(res.status, 200);
+    const data = await res.json();
+    assert.equal(data.isEligible, true);
+    assert.equal(data.adjustedIncome, 129040);
+    assert.equal(data.incomeCap, 135500);
+    assert.equal(data.deductions.dependents.amount, 960);
+    assert.equal(data.deductions.childcare.amount, 12000);
+  });
+
+  test('POST /api/v1/proforma calculates 100% LTV financed note and zero down payment', async () => {
+    const res = await fetch(`${BASE_URL}/api/v1/proforma`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        lotCost: 42000,
+        sqft: 1650,
+        costPerSqFt: 185,
+        sitePrep: 33500,
+        softCosts: 7000
+      })
+    });
+    assert.equal(res.status, 200);
+    const data = await res.json();
+    assert.equal(data.downPaymentRequired, 0);
+    assert.equal(data.cashAtClosing, 0);
+    assert.ok(data.waterfall.totalFinancedNote > 400000);
+    assert.ok(data.monthlyPayment.principalAndInterest > 2000);
+  });
+
+  test('GET /api/v1/whitelabel returns valid multi-tenant specification', async () => {
+    const res = await fetch(`${BASE_URL}/api/v1/whitelabel`);
+    assert.equal(res.status, 200);
+    const data = await res.json();
+    assert.ok(data.tenant.organizationName);
+    assert.ok(data.branding.primaryColor);
+  });
+});
+
 
