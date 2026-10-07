@@ -515,7 +515,7 @@ pre.code { margin: 8px 0 0; padding: 12px; border-radius: 6px; background: #1618
         <p class="eyebrow">Pro · builders, realtors, lenders, nonprofits</p>
         <div class="price">$49 <small>per month</small></div>
         <ul><li>Bulk check whole lists of ZIPs or addresses</li><li>Download results as a spreadsheet</li><li>Your own API key: unlimited checks</li><li>Everything families get</li></ul>
-        <a class="btn primary" href="https://buy.stripe.com/28E8wQbaf2iKg4V2em9AA0y" target="_blank" rel="noopener">Get Pro</a>
+        <a class="btn primary" data-stripe="https://buy.stripe.com/28E8wQbaf2iKg4V2em9AA0y" href="https://buy.stripe.com/28E8wQbaf2iKg4V2em9AA0y" target="_blank" rel="noopener">Get Pro</a>
         <p class="small muted">Cancel anytime. Billed monthly by UnyKorn LLC through Stripe.</p>
       </article>
       <article class="glass card plan">
@@ -579,7 +579,7 @@ $body = '{"jsonrpc":"2.0","id":1,"method":"tools/call","params":{"name":"check_z
 </aside>
 
 <footer class="foot">
-  <span style="display:inline-flex;align-items:center;gap:8px"><img src="/brand/3fs-mark.svg" alt="" width="22" height="22"><b>3FS</b> · <a href="https://3fs.app/">3fs.app</a> · a UnyKorn LLC system</span>
+  <span style="display:inline-flex;align-items:center;gap:8px"><img src="/brand/3fs-mark.svg" alt="" width="22" height="22"><b>3FS</b> · <a href="https://3fs.app/">3fs.app</a> · a UnyKorn LLC system · <a href="https://3fs.app/verify">Verify this site</a></span>
   <span>Not affiliated with or endorsed by USDA. USDA Rural Development or an approved lender makes every loan decision.</span>
   <span>Income limits: FY2026, HB-1-3550 Appendix 9 (PN 657)</span>
 </footer>
@@ -588,6 +588,7 @@ $body = '{"jsonrpc":"2.0","id":1,"method":"tools/call","params":{"name":"check_z
 <script src="https://cdn.jsdelivr.net/npm/topojson-client@3.1.0/dist/topojson-client.min.js" integrity="sha384-Ukv1p/xTma6P4/2bY5KzWBw+ydSpXmhCMtyciIQVDJ1RmOxtCYNMF1uXT9T63H67" crossorigin="anonymous"></script>
 <script src="/data.js"></script>
 <script src="/app.js"></script>
+<script type="module" src="/kit-ref.js"></script>
 </body>
 </html>
 
