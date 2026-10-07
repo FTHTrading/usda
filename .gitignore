@@ -1,0 +1,22 @@
+# Dependencies
+node_modules/
+package-lock.json
+
+# Local Environment & Secrets
+.env
+.env.local
+.env.*.local
+*.log
+
+# Cloudflare Wrangler Cache
+.wrangler/
+
+# System & OS Files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Output / Temporary Exports
+dist/
+build/
+*.tmp

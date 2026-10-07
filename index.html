@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>USDA Rural OS | 3FS Operating Workspace (usda.3fs.app)</title>
+  <meta name="description" content="White Liquid-Glass Operating Workspace for USDA Section 502 Single-Close Construction, Satellite GIS Radar, Autonomous AI Workflow Engine, and Form 3555-SC PDF Generation.">
+  
+  <!-- Favicon & Brand Icons -->
+  <link rel="icon" href="assets/brand/3fs-favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="assets/brand/3fs-logo.svg">
+
+  <!-- Leaflet GIS CDN -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+  
+  <!-- jsPDF Client-Side PDF Generation Engine -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body class="theme-white-glass">
+
+  <div class="workspace-shell">
+    <!-- Left Navigation Sidebar -->
+    <aside class="workspace-sidebar" id="app-sidebar">
+      <!-- Sidebar Brand Header -->
+      <div class="sidebar-brand-block">
+        <div class="brand-symbol-3d" title="3FS OS">
+          <img src="assets/brand/3fs-logo.svg" alt="3FS Logo" class="brand-logo-img" />
+        </div>
+        <div class="brand-text-col">
+          <span class="brand-title-main">USDA RURAL OS</span>
+          <span class="brand-subsite-tag">usda.3fs.app · 3FS</span>
+        </div>
+      </div>
+
+      <!-- Navigation Section -->
+      <nav class="sidebar-nav-menu" aria-label="Main Destinations">
+        <div class="nav-group-label">PROJECT LIFECYCLE (ONE RECORD)</div>
+        
+        <button class="nav-sidebar-item active" data-tab="overview" id="nav-item-overview">
+          <span class="item-icon">🏠</span>
+          <span class="item-title">Project Overview</span>
+        </button>
+
+        <button class="nav-sidebar-item" data-tab="design" id="nav-item-design">
+          <span class="item-icon">📐</span>
+          <span class="item-title">Design Coordination</span>
+          <span class="badge-nav-pill pill-blue">v2.4</span>
+        </button>
+
+        <button class="nav-sidebar-item" data-tab="compliance" id="nav-item-compliance">
+          <span class="item-icon">⚖️</span>
+          <span class="item-title">Building Codes</span>
+          <span class="badge-nav-pill pill-green">Matrix</span>
+        </button>
+
+        <button class="nav-sidebar-item" data-tab="carbon" id="nav-item-carbon">
+          <span class="item-icon">🌱</span>
+          <span class="item-title">Carbon & Net Zero</span>
+          <span class="badge-nav-pill pill-purple">18.4 EUI</span>
+        </button>
+
+        <button class="nav-sidebar-item" data-tab="applications" id="nav-item-applications">
+          <span class="item-icon">📋</span>
+          <span class="item-title">Applications & Permits</span>
+          <span class="badge-nav-pill pill-gold">4 Filings</span>
+        </button>
+
+        <button class="nav-sidebar-item" data-tab="build" id="nav-item-build">
+          <span class="item-icon">🏗️</span>
+          <span class="item-title">Construction & Draws</span>
+          <span class="badge-nav-pill pill-blue">5 Draws</span>
+        </button>
+
+        <button class="nav-sidebar-item" data-tab="handover" id="nav-item-handover">
+          <span class="item-icon">🔑</span>
+          <span class="item-title">Handover & Ops</span>
+          <span class="badge-nav-pill pill-emerald">Pack</span>
+        </button>
+
+        <button class="nav-sidebar-item" data-tab="documents" id="nav-item-docs">
+          <span class="item-icon">📄</span>
+          <span class="item-title">Documents & Real PDFs</span>
+          <span class="badge-nav-pill pill-green">7 PDFs</span>
+        </button>
+
+        <button class="nav-sidebar-item" data-tab="ai-workspace" id="nav-item-ai">
+          <span class="item-icon">🤖</span>
+          <span class="item-title">AI Project Engine</span>
+          <span class="badge-nav-pill">Autonomous</span>
+        </button>
+
+        <div class="nav-group-label" style="margin-top: 1.25rem;">ENGINES & VERIFICATION</div>
+
+        <button class="nav-sidebar-item" data-tab="calc-suite" id="nav-item-calc-suite">
+          <span class="item-icon">🧮</span>
+          <span class="item-title">8 Calculators & Blueprint</span>
+        </button>
+
+        <button class="nav-sidebar-item" data-tab="map-radar" id="nav-item-map">
+          <span class="item-icon">🛰️</span>
+          <span class="item-title">Satellite & GIS Radar</span>
+        </button>
+
+        <button class="nav-sidebar-item" data-tab="secrets-vault" id="nav-item-secrets">
+          <span class="item-icon">💎</span>
+          <span class="item-title">Secret Loopholes Vault</span>
+        </button>
+
+        <button class="nav-sidebar-item" data-tab="test-runner" id="nav-item-test-runner">
+          <span class="item-icon">🧪</span>
+          <span class="item-title">System Test Suite</span>
+          <span class="badge-nav-pill pill-emerald">19 Tests</span>
+        </button>
+
+        <button class="nav-sidebar-item" data-tab="activity" id="nav-item-activity">
+          <span class="item-icon">⚡</span>
+          <span class="item-title">Activity Ledger</span>
+        </button>
+
+        <button class="nav-sidebar-item" data-tab="settings" id="nav-item-settings">
+          <span class="item-icon">🌐</span>
+          <span class="item-title">Settings & 3FS Host</span>
+        </button>
+      </nav>
+
+      <!-- Sidebar User & Environment Footer -->
+      <div class="sidebar-user-footer">
+        <div class="user-avatar-circle user-avatar-gate" title="UnyKorn Gate Rail">
+          <img src="assets/brand/gate-mark-flat.svg" alt="UnyKorn Gate" style="width: 28px; height: 28px; display: block;" />
+        </div>
+        <div class="user-meta-col">
+          <span class="user-name">Kevan (kevanbtc)</span>
+          <span class="user-env-tag">Edge: usda.3fs.app</span>
+        </div>
+      </div>
+    </aside>
+
+    <!-- Main Workspace Container -->
+    <div class="workspace-main-panel">
+      <!-- Top Floating Header Bar -->
+      <header class="workspace-top-bar">
+        <div class="top-bar-left">
+          <div style="display: flex; align-items: center; gap: 0.65rem;">
+            <img src="assets/brand/3fs-logo.svg" alt="3FS" style="width: 24px; height: 24px; border-radius: 6px; box-shadow: 0 1px 3px rgba(0,0,0,0.1); flex-shrink: 0;" />
+            <span class="top-bar-crumb">Workspace / <strong>USDA Single-Close 3FS OS</strong></span>
+          </div>
+        </div>
+
+        <div class="top-bar-center">
+          <div class="global-search-wrapper">
+            <span class="search-symbol">🔍</span>
+            <input type="text" id="global-search-input" placeholder="Search workspace, GIS parcels, pro-formas, or loopholes... (Ctrl+K)" />
+            <kbd class="search-kbd">⌘K</kbd>
+          </div>
+        </div>
+
+        <div class="top-bar-right">
+          <a href="https://usda.3fs.app" target="_blank" rel="noopener noreferrer" class="edge-status-pill">
+            <span class="edge-dot"></span>
+            <span>usda.3fs.app</span>
+          </a>
+          <button class="btn-quick-pdf" id="btn-global-quick-pdf" title="Generate Form 3555-SC PDF">
+            <span>📥</span> Download PDF
+          </button>
+        </div>
+      </header>
+
+      <!-- Viewports Section -->
+      <main class="workspace-content-body">
+        <!-- 1. Master Single Project Overview -->
+        <section class="workspace-pane active" id="view-overview">
+          <div id="project-overview-container"></div>
+        </section>
+
+        <!-- 1b. Legacy Home alias -->
+        <section class="workspace-pane" id="view-home">
+          <div id="home-container"></div>
+        </section>
+
+        <!-- 2. Design Coordination & Versioned Packages -->
+        <section class="workspace-pane" id="view-design">
+          <div id="design-coordination-container"></div>
+        </section>
+
+        <!-- 3. Building Codes & Traceable Compliance Matrix -->
+        <section class="workspace-pane" id="view-compliance">
+          <div id="compliance-matrix-container"></div>
+        </section>
+
+        <!-- 4. Carbon & Net-Zero Assessment -->
+        <section class="workspace-pane" id="view-carbon">
+          <div id="carbon-energy-container"></div>
+        </section>
+
+        <!-- 5. Applications & Permits Tracking -->
+        <section class="workspace-pane" id="view-applications">
+          <div id="applications-permits-container"></div>
+        </section>
+
+        <!-- 6. Construction Tracking & Escrow Draws -->
+        <section class="workspace-pane" id="view-build">
+          <div id="construction-tracking-container"></div>
+        </section>
+
+        <!-- 7. Handover & Operations Building Pack -->
+        <section class="workspace-pane" id="view-handover">
+          <div id="handover-operations-container"></div>
+        </section>
+
+        <!-- 8. Connected AI Workflow Engine -->
+        <section class="workspace-pane" id="view-ai-workspace">
+          <div id="ai-workspace-container"></div>
+        </section>
+
+        <!-- 9. Satellite & GIS Radar -->
+        <section class="workspace-pane" id="view-map-radar">
+          <div id="interactive-map-container"></div>
+        </section>
+
+        <!-- 10. Single-Close Modeler -->
+        <section class="workspace-pane" id="view-calc">
+          <div id="calc-container"></div>
+        </section>
+
+        <!-- 4b. All 8 Calculators Financial Engineering Hub -->
+        <section class="workspace-pane" id="view-calc-suite">
+          <div id="calculator-suite-container"></div>
+        </section>
+
+        <!-- 5. Secret Loopholes Vault -->
+        <section class="workspace-pane" id="view-secrets-vault">
+          <div id="secrets-container"></div>
+        </section>
+
+        <!-- 6. Documents & Real PDF -->
+        <section class="workspace-pane" id="view-documents">
+          <div id="documents-container"></div>
+        </section>
+
+        <!-- 6b. System Test Runner & Verification Suite -->
+        <section class="workspace-pane" id="view-test-runner">
+          <div id="test-runner-container"></div>
+        </section>
+
+        <!-- 7. Activity & Approvals -->
+        <section class="workspace-pane" id="view-activity">
+          <div id="activity-container"></div>
+        </section>
+
+        <!-- 8. Settings & 3FS Deployment -->
+        <section class="workspace-pane" id="view-settings">
+          <div id="settings-container"></div>
+        </section>
+
+        <!-- 9. Screener -->
+        <section class="workspace-pane" id="view-screener">
+          <div id="screener-container"></div>
+        </section>
+
+        <!-- 10. Income Engine -->
+        <section class="workspace-pane" id="view-income">
+          <div id="income-container"></div>
+        </section>
+
+        <!-- 11. Feasibility Matrix -->
+        <section class="workspace-pane" id="view-feasibility">
+          <div id="feasibility-container"></div>
+        </section>
+
+        <!-- 12. Land Hotspots -->
+        <section class="workspace-pane" id="view-hotspots">
+          <div id="hotspots-container"></div>
+        </section>
+      </main>
+    </div>
+  </div>
+
+  <script type="module" src="js/app.js"></script>
+</body>
+</html>

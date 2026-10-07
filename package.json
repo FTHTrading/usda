@@ -1,0 +1,40 @@
+{
+  "name": "@fthtrading/usda-rural-os",
+  "version": "2.4.0",
+  "description": "USDA Section 502 Single-Close Rural Construction & 3FS Operating Workspace Platform",
+  "type": "module",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js",
+    "test": "node --test tests/usda-suite.test.js",
+    "deploy": "wrangler pages deploy . --project-name usda-3fs --branch main",
+    "whitelabel": "node scripts/apply-whitelabel.js",
+    "lint": "node --check server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/FTHTrading/usda.git"
+  },
+  "bugs": {
+    "url": "https://github.com/FTHTrading/usda/issues"
+  },
+  "homepage": "https://usda.3fs.app",
+  "keywords": [
+    "usda",
+    "section-502",
+    "rural-housing",
+    "single-close",
+    "construction-loan",
+    "zero-down",
+    "whitelabel",
+    "3fs",
+    "gis-radar",
+    "jspdf",
+    "ai-workspace",
+    "building-code",
+    "net-zero"
+  ],
+  "author": "FTHTrading <kevanbtc@gmail.com> (https://github.com/FTHTrading)",
+  "license": "Apache-2.0"
+}
