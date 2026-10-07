@@ -1,0 +1,593 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>USDA Rural Home Loan Eligibility Check: Income Limits by ZIP (FY2026) | 3FS Rural Home</title>
+<meta name="description" content="Free USDA home loan check. Enter a ZIP or city and household size to see FY2026 USDA Direct and Guaranteed income limits, rural eligibility and nearby places you qualify. Not USDA; USDA or an approved lender decides.">
+<link rel="canonical" href="https://usda.3fs.app/">
+<meta name="robots" content="index, follow, max-image-preview:large">
+<meta name="keywords" content="USDA home loan, USDA loan eligibility, USDA income limits 2026, rural development loan, USDA guaranteed loan, USDA direct loan, zero down home loan, rural home loan map, first time home buyer rural">
+<link rel="icon" href="/favicon.ico" sizes="any">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<meta name="theme-color" content="#A30D22">
+<link rel="manifest" href="/manifest.webmanifest">
+<link rel="icon" type="image/svg+xml" href="/brand/3fs-mark.svg">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="3FS Rural Home">
+<meta property="og:title" content="USDA Rural Home Loan Check: Income Limits by ZIP (FY2026)">
+<meta property="og:description" content="Free. Enter a ZIP and household size to see where you qualify for a USDA home loan, with the source page for every number.">
+<meta property="og:url" content="https://usda.3fs.app/">
+<meta property="og:image" content="https://usda.3fs.app/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="USDA Rural Home Loan Check: Income Limits by ZIP (FY2026)">
+<meta name="twitter:description" content="Free. See where you qualify for a USDA home loan, with the source for every number.">
+<meta name="twitter:image" content="https://usda.3fs.app/og.png">
+<link rel="alternate" type="application/rss+xml" title="3FS Rural Home blog" href="/blog/feed.xml">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Organization","@id":"https://usda.3fs.app/#org","name":"3FS Rural Home","legalName":"UnyKorn LLC","url":"https://usda.3fs.app/","logo":"https://usda.3fs.app/brand/3fs-mark-512.png","email":"kevan@unykorn.org","address":{"@type":"PostalAddress","streetAddress":"5655 Peachtree Pkwy NW","addressLocality":"Norcross","addressRegion":"GA","postalCode":"30099","addressCountry":"US"},"areaServed":"US","sameAs":["https://3fs.app/","https://unykorn.ai/"]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","@id":"https://usda.3fs.app/#app","name":"3FS Rural Home","url":"https://usda.3fs.app/","applicationCategory":"FinanceApplication","operatingSystem":"Web","description":"Free USDA home loan check. Enter a ZIP or city and household size to see FY2026 USDA Direct and Guaranteed income limits, rural eligibility and nearby places you qualify. Not USDA; USDA or an approved lender decides.","publisher":{"@id":"https://usda.3fs.app/#org"},"offers":[{"@type":"Offer","name":"Families","price":"0","priceCurrency":"USD"},{"@type":"Offer","name":"Pro for builders, realtors, lenders and nonprofits","price":"49","priceCurrency":"USD","billingIncrement":"P1M"}],"featureList":["FY2026 USDA income limits for every US county","Direct and Guaranteed loan check by ZIP, city or county","Map of places where a household qualifies","Opportunity Zone counts","AI guide that cites the source page","MCP connection for Claude Code and AI agents"],"isAccessibleForFree":true}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"What is a USDA rural home loan?","acceptedAnswer":{"@type":"Answer","text":"A USDA Single Family Housing loan helps people buy, build or repair a home in an eligible rural area, often with no down payment. There are two main kinds: a Direct loan, where USDA lends to the household itself, and a Guaranteed loan, where an approved private lender makes the loan and USDA backs it."}},{"@type":"Question","name":"What is the USDA income limit for my county?","acceptedAnswer":{"@type":"Answer","text":"Limits are set by USDA for each county or metro area and household size, and updated every year. 3FS Rural Home shows the FY2026 Direct (low-income) and Guaranteed (moderate-income) limits for any ZIP, city or county, with the page of the USDA table each number comes from."}},{"@type":"Question","name":"Do I qualify for a USDA loan?","acceptedAnswer":{"@type":"Answer","text":"You generally need adjusted household income under the limit for your area, a home in a USDA-eligible rural area, and acceptable credit. 3FS checks the income limit and area type in seconds. USDA or an approved lender makes the final decision."}},{"@type":"Question","name":"Is 3FS Rural Home part of USDA?","acceptedAnswer":{"@type":"Answer","text":"No. 3FS Rural Home is a free technology service run by UnyKorn LLC. It is not affiliated with USDA and is not a lender or broker. It uses USDA's published tables and shows the source for every number."}},{"@type":"Question","name":"How much does 3FS Rural Home cost?","acceptedAnswer":{"@type":"Answer","text":"It is free for families and homebuyers. Builders, realtors, lenders and nonprofits can get Pro for $49 a month with bulk checks and an API key. AI agents pay $0.02 per check."}}]}</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+.plans { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; align-items: stretch; }
+.plan { display: flex; flex-direction: column; gap: 10px; }
+.plan.hot { box-shadow: 0 0 0 2px #A30D22, var(--shadow-lg); }
+.plan .price { font: 800 40px/1 var(--display); font-stretch: 100%; }
+.plan .price small { font: 500 14px var(--sans); color: var(--muted); }
+.plan ul { margin: 0; padding-left: 18px; display: grid; gap: 6px; color: var(--ink2); font-size: 14.5px; flex: 1; }
+.pro-grid { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); gap: 14px; margin-top: 14px; align-items: start; }
+.keybox { font: 600 14px var(--mono); padding: 12px; border-radius: 6px; background: #16181B; color: #FFE3E5; overflow-wrap: anywhere; margin-top: 10px; }
+.bulk textarea { width: 100%; min-height: 130px; border-radius: 6px; border: 1px solid rgba(13,21,32,.16); padding: 10px 12px; font: 13px/1.5 var(--mono); background: #fff; resize: vertical; }
+.tbl-wrap { overflow-x: auto; margin-top: 12px; max-height: 420px; overflow-y: auto; }
+.tbl { border-collapse: collapse; width: 100%; font-size: 13px; }
+.tbl th, .tbl td { text-align: left; padding: 7px 9px; border-bottom: 1px solid rgba(79,93,116,.15); white-space: nowrap; font-variant-numeric: tabular-nums; }
+.tbl th { font: 600 10.5px var(--mono); letter-spacing: .06em; text-transform: uppercase; color: var(--muted); position: sticky; top: 0; background: #f6f8fb; }
+.lock { display: inline-flex; gap: 6px; align-items: center; font: 600 10px var(--mono); letter-spacing: .1em; text-transform: uppercase; padding: 4px 8px; border-radius: 6px; background: #fff4d6; color: #7a5208; }
+@media (max-width: 960px) { .plans, .pro-grid { grid-template-columns: minmax(0, 1fr); } }
+/* Layout: one-screen app per page — globe stage left, answer card right; pages via top nav. Single light frosted-glass look (silver, light blue, field green). */
+:root {
+  --ink: #111214;
+  --ink2: #30343A;
+  --muted: #5F646C;
+  --line: rgba(79, 93, 116, .2);
+  --volt: #2B3A55;
+  --volt2: #B9C2D6;
+  --field: #A30D22;
+  --field2: #E89AA3;
+  --gold: #B8860B;
+  --gold2: #f6cf6a;
+  --bad: #c2362f;
+  --warn: #a8700f;
+  --bg: #F7F7F4;
+  --glass: #FFFFFF;
+  --edge: #D8DADF;
+  --shadow: 0 1px 0 rgba(255,255,255,.9) inset, 0 14px 34px -12px rgba(26, 50, 84, .24), 0 2px 6px rgba(26, 50, 84, .06);
+  --shadow-lg: 0 1px 0 rgba(255,255,255,.95) inset, 0 30px 60px -20px rgba(26, 50, 84, .32), 0 4px 12px rgba(26, 50, 84, .08);
+  --r: 10px;
+  --display: "Inter", Helvetica, Arial, sans-serif;
+  --sans: "Inter", Helvetica, Arial, sans-serif;
+  --mono: "IBM Plex Mono", ui-monospace, Menlo, monospace;
+  color-scheme: light;
+}
+* { box-sizing: border-box; }
+[hidden] { display: none !important; }
+img { max-width: 100%; }
+a.btn { text-decoration: none; display: inline-block; text-align: center; }
+html, body { height: 100%; }
+body { margin: 0; font: 15px/1.5 var(--sans); color: var(--ink); background: var(--bg); overflow-x: hidden; }
+h1, h2, h3 { font-family: var(--display); font-stretch: 100%; font-weight: 800; letter-spacing: -.02em; margin: 0; color: var(--ink); text-wrap: balance; }
+h1 { font-size: clamp(26px, 3.6vw, 40px); line-height: 1.04; }
+h2 { font-size: 20px; line-height: 1.15; }
+h3 { font-size: 16px; }
+p { margin: 0; }
+a { color: var(--volt); }
+button, input, select { font: inherit; color: inherit; }
+.mono { font-family: var(--mono); }
+.muted { color: var(--muted); }
+.small { font-size: 12.5px; }
+.sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+.num { font-variant-numeric: tabular-nums; }
+
+.field-bg { position: fixed; inset: 0; z-index: -1; overflow: hidden; background: linear-gradient(180deg, #ffffff, #F7F7F4); }
+.blob { display: none; position: absolute; border-radius: 50%; filter: blur(80px); opacity: .8; animation: float 28s ease-in-out infinite alternate; }
+.b1 { width: 620px; height: 620px; left: -160px; top: -160px; background: #f3d6d9; }
+.b2 { width: 540px; height: 540px; right: -160px; top: 25%; background: #e3e6ea; animation-delay: -9s; }
+.b3 { width: 460px; height: 460px; left: 35%; bottom: -240px; background: #f6e2e4; opacity: .6; animation-delay: -15s; }
+@keyframes float { to { transform: translate3d(40px, 30px, 0) scale(1.06); } }
+
+.glass { background: #FFFFFF; -webkit-backdrop-filter: blur(18px) saturate(160%); backdrop-filter: blur(18px) saturate(160%); border: 1px solid var(--edge); border-radius: var(--r); box-shadow: var(--shadow); }
+
+.band { background: var(--ink); color: #e3ebf5; font: 500 11px/1.4 var(--mono); letter-spacing: .1em; padding: 7px 16px; text-align: center; display: flex; gap: 10px; justify-content: center; align-items: center; flex-wrap: wrap; }
+.band { background: #111214; color: #F2F2EF; }
+.band i { width: 7px; height: 7px; border-radius: 50%; background: #E0334A; box-shadow: 0 0 10px #E0334A; }
+
+.topbar { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 40; margin: 10px 16px 0; padding: 8px 10px 8px 14px; display: flex; align-items: center; gap: 14px; border-radius: 6px; }
+.brand { display: flex; align-items: center; gap: 10px; text-decoration: none; color: var(--ink); flex: none; }
+.mark { width: 36px; height: 36px; display: block; filter: drop-shadow(0 6px 10px rgba(179,18,31,.25)); }
+.brand b { font: 800 17px/1 var(--display); font-stretch: 100%; letter-spacing: .04em; }
+.brand .bsub { display: block; font: 500 10.5px/1.2 var(--mono); color: var(--muted); letter-spacing: .08em; text-transform: uppercase; }
+.nav { display: flex; gap: 4px; flex: 1; justify-content: center; overflow-x: auto; scrollbar-width: none; }
+.nav::-webkit-scrollbar { display: none; }
+.nav a { text-decoration: none; color: var(--ink2); font: 500 .7rem/1 var(--mono); letter-spacing: .14em; text-transform: uppercase; padding: 8px 14px; border-radius: 6px; white-space: nowrap; position: relative; }
+.nav a:hover { background: rgba(255,255,255,.6); }
+.nav a.active { background: #fff; color: var(--ink); box-shadow: 0 6px 14px -8px rgba(26,50,84,.4); }
+.nav a.active::after { content: ""; position: absolute; left: 14px; right: 14px; bottom: 4px; height: 2px; border-radius: 2px; background: linear-gradient(90deg, #A30D22, #E89AA3); }
+.askbtn { flex: none; border: 0; cursor: pointer; padding: 9px 14px; border-radius: 6px; font-weight: 700; font-size: 14px; color: #fff; background: linear-gradient(180deg, #30343A, #16181B); box-shadow: 0 8px 16px -8px rgba(13,21,32,.7); display: inline-flex; gap: 8px; align-items: center; }
+.askbtn .spark { width: 8px; height: 8px; border-radius: 50%; background: #E89AA3; box-shadow: 0 0 10px #E89AA3; }
+
+main { max-width: 1360px; margin: 0 auto; padding-block: 16px 30px; padding-inline: 16px; }
+.page { animation: pagein .4s ease both; }
+@keyframes pagein { from { opacity: .3; transform: translateY(6px); } }
+.eyebrow { font: 600 11px/1.2 var(--mono); letter-spacing: .14em; text-transform: uppercase; color: var(--muted); }
+.lede { color: var(--muted); font-size: 15.5px; margin-top: 6px; max-width: 62ch; }
+
+/* roles */
+.roles { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 8px; margin: 12px 0 14px; }
+.role { cursor: pointer; text-align: left; border: 1px solid var(--edge); background: rgba(255,255,255,.55); border-radius: 6px; padding: 10px 12px; display: flex; gap: 10px; align-items: center; transition: transform .15s, background .15s, box-shadow .15s; box-shadow: 0 6px 16px -10px rgba(26,50,84,.3); min-width: 0; }
+.role:hover { transform: translateY(-1px); background: rgba(255,255,255,.8); }
+.role[aria-pressed="true"] { background: #fff; box-shadow: 0 0 0 2px var(--field), 0 12px 24px -12px rgba(31,138,85,.6); }
+.role .ri { width: 32px; height: 32px; flex: none; border-radius: 10px; display: grid; place-items: center; background: linear-gradient(135deg, #e4ecf5, #fff); border: 1px solid var(--line); color: var(--ink2); }
+.role[aria-pressed="true"] .ri { background: linear-gradient(135deg, #A30D22, #E0334A); color: #fff; border-color: transparent; }
+.role b { display: block; font-size: 13.5px; line-height: 1.2; }
+.role small { display: block; font-size: 11.5px; color: var(--muted); line-height: 1.25; }
+
+/* find layout */
+.find { display: grid; grid-template-columns: minmax(0, 1fr) 380px; gap: 14px; align-items: start; }
+.stage { position: relative; padding: 0; overflow: hidden; min-height: 600px; height: calc(100vh - 230px); max-height: 820px; }
+#globe { display: block; width: 100%; height: 100%; touch-action: none; cursor: grab; }
+#globe.dragging { cursor: grabbing; }
+.searchwrap { position: absolute; top: 14px; left: 14px; right: 14px; z-index: 3; display: flex; flex-direction: column; gap: 8px; pointer-events: none; }
+.search { pointer-events: auto; display: flex; gap: 8px; align-items: center; padding: 6px 6px 6px 14px; border-radius: 6px; background: rgba(255,255,255,.86); border: 1px solid var(--edge); box-shadow: var(--shadow-lg); max-width: 640px; }
+.search svg { flex: none; color: var(--muted); }
+.search input { flex: 1; min-width: 0; border: 0; background: transparent; font-size: 16px; padding: 9px 4px; outline: none; color: var(--ink); }
+.search input::placeholder { color: #7a879b; }
+.btn { border: 1px solid rgba(13,21,32,.12); background: rgba(255,255,255,.85); color: var(--ink); padding: 9px 15px; border-radius: 6px; font-weight: 650; font-size: 14px; cursor: pointer; box-shadow: 0 1px 0 #fff inset, 0 4px 10px -6px rgba(26,50,84,.3); transition: transform .15s, background .15s; }
+.btn:hover { background: #fff; transform: translateY(-1px); }
+.btn.primary { background: linear-gradient(180deg, #B01C31, #A30D22); color: #fff; border-color: #6E0717; box-shadow: 0 10px 20px -10px rgba(179,18,31,.7); }
+.btn.dark { background: linear-gradient(180deg, #213149, #111214); color: #fff; border-color: #111214; }
+.btn.small { padding: 6px 10px; font-size: 12.5px; border-radius: 9px; }
+.btn:focus-visible, .role:focus-visible, .nav a:focus-visible, .chip:focus-visible, .layer:focus-visible, .askbtn:focus-visible, .seg button:focus-visible { outline: 2px solid var(--volt); outline-offset: 2px; }
+.sugg { pointer-events: auto; list-style: none; margin: 0; padding: 6px; max-width: 640px; border-radius: 6px; background: rgba(255,255,255,.95); border: 1px solid var(--edge); box-shadow: var(--shadow-lg); max-height: 300px; overflow-y: auto; }
+.sugg li { padding: 8px 10px; border-radius: 10px; cursor: pointer; display: flex; justify-content: space-between; gap: 10px; font-size: 14px; }
+.sugg li[aria-selected="true"], .sugg li:hover { background: #eaf2fb; }
+.sugg li span { color: var(--muted); font-size: 12px; font-family: var(--mono); }
+.layers { position: absolute; left: 14px; bottom: 14px; z-index: 3; display: flex; flex-wrap: wrap; gap: 6px; max-width: calc(100% - 28px); }
+.layer { cursor: pointer; border: 1px solid var(--edge); background: rgba(255,255,255,.78); border-radius: 4px; padding: 7px 12px; font-size: 13px; font-weight: 600; color: var(--ink2); display: inline-flex; align-items: center; gap: 7px; box-shadow: 0 6px 14px -8px rgba(26,50,84,.35); }
+.layer i { width: 10px; height: 10px; border-radius: 3px; }
+.layer[aria-pressed="true"] { background: var(--ink); color: #fff; border-color: var(--ink); }
+.legend { position: absolute; right: 14px; bottom: 14px; z-index: 3; padding: 10px 12px; font-size: 12px; min-width: 170px; }
+.legend .bar { height: 8px; border-radius: 6px; margin: 6px 0 4px; }
+.legend .ticks { display: flex; justify-content: space-between; font: 11px var(--mono); color: var(--muted); }
+.legend .keys { display: grid; gap: 4px; margin-top: 6px; }
+.legend .keys span { display: flex; gap: 6px; align-items: center; }
+.legend .keys i { width: 12px; height: 12px; border-radius: 3px; flex: none; }
+.zoomctl { position: absolute; right: 14px; top: 76px; z-index: 3; display: flex; flex-direction: column; gap: 6px; }
+.zoomctl button { width: 36px; height: 36px; border-radius: 6px; border: 1px solid var(--edge); background: rgba(255,255,255,.85); cursor: pointer; font-weight: 700; font-size: 16px; color: var(--ink2); box-shadow: 0 6px 14px -8px rgba(26,50,84,.35); }
+.hint { position: absolute; left: 50%; transform: translateX(-50%); bottom: 64px; z-index: 2; font: 500 11.5px var(--mono); color: var(--muted); background: rgba(255,255,255,.7); padding: 5px 10px; border-radius: 4px; pointer-events: none; white-space: nowrap; }
+
+/* answer card */
+.card { padding: 18px; }
+.card + .card { margin-top: 14px; }
+.ans-head { display: flex; justify-content: space-between; gap: 10px; align-items: flex-start; }
+.ans-head h2 { font-size: 24px; }
+.tag { display: inline-block; font: 600 10px/1 var(--mono); letter-spacing: .12em; text-transform: uppercase; padding: 4px 7px; border-radius: 6px; background: rgba(13,21,32,.06); color: var(--ink2); border: 1px solid rgba(13,21,32,.08); white-space: nowrap; }
+.tag.ex { background: #fff4d6; color: #7a5208; border-color: #f0dca3; }
+.hh { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 10px; margin: 14px 0 10px; align-items: end; }
+.fld { display: flex; flex-direction: column; gap: 5px; min-width: 0; }
+.fld > span { font: 600 10.5px/1.2 var(--mono); letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
+.fld input, .fld select { width: 100%; min-width: 0; padding: 9px 11px; border-radius: 10px; border: 1px solid rgba(13,21,32,.16); background: rgba(255,255,255,.9); font-size: 15px; color: var(--ink); }
+.fld input:focus, .fld select:focus { outline: none; border-color: var(--volt); box-shadow: 0 0 0 3px rgba(35,105,232,.16); }
+.step { display: inline-flex; align-items: center; border: 1px solid rgba(13,21,32,.16); border-radius: 10px; background: rgba(255,255,255,.9); overflow: hidden; }
+.step button { width: 34px; height: 38px; border: 0; background: transparent; cursor: pointer; font-size: 18px; font-weight: 700; color: var(--ink2); }
+.step output { min-width: 34px; text-align: center; font-weight: 700; font-variant-numeric: tabular-nums; }
+.verdicts { display: grid; gap: 8px; margin-top: 4px; }
+.vd { display: grid; grid-template-columns: 30px minmax(0, 1fr) auto; gap: 10px; align-items: center; padding: 10px 12px; border-radius: 6px; background: rgba(255,255,255,.66); border: 1px solid rgba(255,255,255,.95); }
+.vd .ico { width: 30px; height: 30px; border-radius: 50%; display: grid; place-items: center; font-weight: 800; color: #fff; font-size: 14px; }
+.vd .ico.yes { background: radial-gradient(circle at 35% 30%, #E89AA3, #A30D22); box-shadow: 0 0 12px rgba(179,18,31,.4); }
+.vd .ico.no { background: #b9c3d0; }
+.vd .ico.maybe { background: radial-gradient(circle at 35% 30%, #ffe3a3, var(--gold)); }
+.vd .ico.info { background: radial-gradient(circle at 35% 30%, #c4e4ff, var(--volt)); }
+.vd b { display: block; font-size: 14px; }
+.vd small { display: block; font-size: 12px; color: var(--muted); line-height: 1.35; }
+.vd .amt { font: 600 14px var(--mono); font-variant-numeric: tabular-nums; text-align: right; }
+.vd .amt small { font-family: var(--sans); text-align: right; }
+.cta { display: flex; gap: 8px; margin-top: 14px; flex-wrap: wrap; }
+.cta .btn { flex: 1; min-width: 140px; }
+.src { margin-top: 12px; font-size: 12px; color: var(--muted); display: flex; gap: 6px; align-items: baseline; flex-wrap: wrap; }
+.src a { font-family: var(--mono); font-size: 11.5px; }
+.near h3 { display: flex; justify-content: space-between; align-items: baseline; gap: 8px; }
+.near ul { list-style: none; margin: 10px 0 0; padding: 0; display: grid; gap: 6px; }
+.near li button { width: 100%; text-align: left; cursor: pointer; display: grid; grid-template-columns: 10px minmax(0, 1fr) auto; gap: 10px; align-items: center; padding: 8px 10px; border-radius: 6px; border: 1px solid transparent; background: rgba(255,255,255,.55); font-size: 13.5px; }
+.near li button:hover { border-color: var(--volt2); background: #fff; }
+.near li i { width: 10px; height: 10px; border-radius: 3px; }
+.near li span { font: 12px var(--mono); color: var(--muted); }
+pre.code { margin: 8px 0 0; padding: 12px; border-radius: 6px; background: #16181B; color: #d7e6f7; font: 11.5px/1.55 var(--mono); overflow: auto; max-height: 300px; white-space: pre; max-width: 100%; }
+
+/* AI drawer */
+.ai { position: fixed; z-index: 60; right: 16px; bottom: calc(16px + env(safe-area-inset-bottom, 0px)); width: min(440px, calc(100vw - 32px)); max-height: min(640px, calc(100vh - 120px)); display: flex; flex-direction: column; background: rgba(255,255,255,.88); box-shadow: var(--shadow-lg); animation: aiin .3s cubic-bezier(.2,.8,.2,1) both; }
+@keyframes aiin { from { opacity: 0; transform: translateY(16px) scale(.98); } }
+.ai-head { display: flex; align-items: center; gap: 10px; padding: 14px 14px 10px 16px; border-bottom: 1px solid rgba(79,93,116,.12); }
+.ai-head .mark { width: 32px; height: 32px; font-size: 12px; }
+.ai-head h2 { font-size: 17px; flex: 1; }
+.ai-head h2 small { display: block; font: 500 11px var(--sans); color: var(--muted); letter-spacing: 0; }
+.x { width: 32px; height: 32px; border-radius: 10px; border: 1px solid var(--edge); background: #fff; cursor: pointer; color: var(--ink2); }
+.agents { display: flex; gap: 6px; flex-wrap: wrap; padding: 10px 16px 0; }
+.agent { display: inline-flex; align-items: center; gap: 6px; font: 600 11px var(--mono); letter-spacing: .04em; padding: 5px 9px; border-radius: 4px; background: rgba(13,21,32,.05); color: var(--muted); border: 1px solid rgba(13,21,32,.06); }
+.agent i { width: 7px; height: 7px; border-radius: 50%; background: #b9c3d0; }
+.agent.run { color: var(--ink); background: #fff7e3; border-color: #f2dda5; }
+.agent.run i { background: var(--gold); box-shadow: 0 0 8px var(--gold); animation: blink 1s infinite; }
+.agent.done { color: #6E0717; background: #F8E7E9; border-color: #EBC3C8; }
+.agent.done i { background: #A30D22; }
+@keyframes blink { 50% { opacity: .3; } }
+.chat { flex: 1; overflow-y: auto; padding: 12px 16px; display: grid; gap: 10px; align-content: start; min-height: 120px; }
+.msg { padding: 10px 12px; border-radius: 6px; font-size: 14.5px; line-height: 1.5; max-width: 92%; white-space: pre-wrap; }
+.msg.me { justify-self: end; background: var(--ink); color: #fff; border-bottom-right-radius: 4px; }
+.msg.bot { justify-self: start; background: #fff; border: 1px solid rgba(79,93,116,.14); border-bottom-left-radius: 4px; }
+.msg.bot.think { color: var(--muted); font-style: italic; }
+.starters { display: flex; flex-wrap: wrap; gap: 6px; padding: 0 16px 10px; }
+.chip { cursor: pointer; font-size: 12.5px; padding: 6px 10px; border-radius: 4px; background: #fff; border: 1px solid var(--line); color: var(--ink2); text-align: left; }
+.chip:hover { border-color: var(--volt); }
+.ai form { display: flex; gap: 8px; padding: 10px 12px 12px; border-top: 1px solid rgba(79,93,116,.12); }
+.ai form input { flex: 1; min-width: 0; padding: 10px 12px; border-radius: 6px; border: 1px solid rgba(13,21,32,.16); font-size: 15px; background: #fff; }
+.ai form input:focus { outline: none; border-color: var(--volt); box-shadow: 0 0 0 3px rgba(35,105,232,.16); }
+
+/* my file */
+.file-top { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 16px; align-items: end; margin-bottom: 14px; }
+.seg { display: inline-flex; padding: 4px; gap: 4px; border-radius: 6px; background: rgba(255,255,255,.6); border: 1px solid var(--edge); }
+.seg button { border: 0; background: transparent; padding: 9px 14px; border-radius: 10px; font-weight: 650; font-size: 14px; cursor: pointer; color: var(--muted); }
+.seg button[aria-pressed="true"] { background: #fff; color: var(--ink); box-shadow: 0 6px 14px -8px rgba(26,50,84,.4); }
+.track { padding: 20px 18px 16px; margin-bottom: 14px; }
+.sm-scroll { overflow-x: auto; padding: 8px 2px 4px; }
+.sm { list-style: none; margin: 0; padding: 0; display: flex; align-items: flex-start; min-width: 720px; }
+.sm-node { flex: none; width: 96px; display: flex; flex-direction: column; align-items: center; gap: 6px; text-align: center; }
+.sm-dot { width: 28px; height: 28px; border-radius: 50%; position: relative; background: radial-gradient(circle at 35% 30%, #fff, #dfe6ee 60%, #c3cdd9); border: 1px solid #fff; box-shadow: 0 4px 10px -4px rgba(26,50,84,.35); }
+.sm-node.done .sm-dot { background: radial-gradient(circle at 35% 30%, #fff, #E89AA3 45%, #A30D22); box-shadow: 0 0 14px rgba(179,18,31,.45); }
+.sm-node.done .sm-dot::before { content: "✓"; position: absolute; inset: 0; display: grid; place-items: center; color: #fff; font: 700 13px/1 var(--sans); }
+.sm-node.active .sm-dot { background: radial-gradient(circle at 35% 30%, #fff, #ffe3a3 45%, var(--gold)); }
+.sm-node.active .sm-dot::after { content: ""; position: absolute; inset: -7px; border-radius: 50%; border: 2px solid rgba(201,138,18,.55); animation: ring 1.8s ease-out infinite; }
+@keyframes ring { from { transform: scale(.7); opacity: 1; } to { transform: scale(1.5); opacity: 0; } }
+.sm-lbl { font-weight: 650; font-size: 12.5px; color: var(--ink); line-height: 1.2; }
+.who { font: 600 9.5px/1 var(--mono); letter-spacing: .08em; text-transform: uppercase; padding: 3px 6px; border-radius: 5px; background: rgba(13,21,32,.06); color: var(--muted); }
+.who.ai { background: #F8E7E9; color: #6E0717; }
+.who.gov { background: #e5efff; color: #1b4fb0; }
+.who.you { background: #fff4d6; color: #7a5208; }
+.sm-wire { flex: 1; min-width: 14px; height: 4px; margin-top: 12px; border-radius: 4px; background: #d5dde7; position: relative; overflow: hidden; }
+.sm-wire.done { background: linear-gradient(90deg, #A30D22, #E89AA3); }
+.sm-wire.done::after { content: ""; position: absolute; top: 0; bottom: 0; width: 40%; left: -40%; background: linear-gradient(90deg, transparent, rgba(255,255,255,.95), transparent); animation: current 1.4s linear infinite; }
+@keyframes current { to { left: 100%; } }
+.file-grid { display: grid; grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); gap: 14px; align-items: start; }
+.docs { list-style: none; margin: 12px 0 0; padding: 0; display: grid; gap: 6px; }
+.docs li { display: grid; grid-template-columns: 24px minmax(0, 1fr) auto; gap: 10px; align-items: center; padding: 9px 12px; border-radius: 6px; background: rgba(255,255,255,.6); border: 1px solid rgba(255,255,255,.95); font-size: 14px; }
+.docs li .ck { width: 22px; height: 22px; border-radius: 7px; border: 1.5px solid #b9c3d0; display: grid; place-items: center; color: #fff; font-size: 12px; font-weight: 800; }
+.docs li.have .ck { background: var(--field); border-color: var(--field); }
+.docs li small { display: block; color: var(--muted); font-size: 12px; }
+.docs li .h { font: 11px var(--mono); color: var(--muted); }
+.drop { display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; gap: 4px; cursor: pointer; border: 1.5px dashed rgba(179,18,31,.45); min-height: 150px; padding: 16px; }
+.drop.over { background: rgba(143,217,168,.25); border-color: var(--field); }
+.drop b { font: 800 18px var(--display); font-stretch: 100%; }
+.mode-note { margin-top: 10px; padding: 12px 14px; border-radius: 6px; background: rgba(255,255,255,.6); font-size: 14px; color: var(--ink2); border-left: 4px solid #A30D22; }
+
+/* network */
+.net-grid { display: grid; grid-template-columns: minmax(0, 1fr) 400px; gap: 14px; align-items: start; }
+.net-svg { width: 100%; height: auto; display: block; }
+.net-svg .edge { stroke: #b9c8da; stroke-width: 2; fill: none; }
+.net-svg .edge.live { stroke: url(#gEdge); stroke-dasharray: 6 8; animation: dash 1.6s linear infinite; }
+@keyframes dash { to { stroke-dashoffset: -28; } }
+.net-svg .node { cursor: pointer; }
+.net-svg .node circle { stroke: #fff; stroke-width: 2; }
+.net-svg .node text { font: 600 13px var(--sans); fill: var(--ink); }
+.net-svg .node text.sub { font: 500 10.5px var(--mono); fill: var(--muted); }
+.net-svg .node:hover circle, .net-svg .node.sel circle { stroke: var(--ink); stroke-width: 2.5; }
+.status { font: 600 10px/1 var(--mono); letter-spacing: .1em; text-transform: uppercase; padding: 4px 7px; border-radius: 6px; }
+.status.live { background: #F8E7E9; color: #6E0717; }
+.status.test { background: #fff4d6; color: #7a5208; }
+.status.plan { background: rgba(13,21,32,.06); color: var(--muted); }
+.hs { list-style: none; margin: 12px 0 0; padding: 0; display: grid; gap: 10px; }
+.hs li { padding: 10px 12px; border-radius: 6px; background: rgba(255,255,255,.6); }
+.hs li b { font-size: 13.5px; display: flex; gap: 8px; align-items: center; }
+.api-form { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)) auto; gap: 8px; align-items: end; margin-top: 12px; }
+
+/* proof */
+.proof-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; }
+.kv { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 7px 14px; margin-top: 12px; font-size: 14px; }
+.kv dt { color: var(--muted); font: 600 11px/1.7 var(--mono); text-transform: uppercase; letter-spacing: .06em; }
+.kv dd { margin: 0; overflow-wrap: anywhere; }
+.hash { font: 12px/1.5 var(--mono); overflow-wrap: anywhere; color: var(--ink2); }
+.ok { color: var(--field); font-weight: 700; } .no { color: var(--bad); font-weight: 700; }
+.limits-list { margin: 10px 0 0; padding-left: 18px; color: var(--ink2); font-size: 14px; display: grid; gap: 6px; }
+
+.foot { max-width: 1360px; margin: 0 auto; padding: 4px 16px 28px; display: flex; gap: 8px 16px; flex-wrap: wrap; justify-content: center; font-size: 12px; color: var(--muted); text-align: center; }
+
+@media (max-width: 1120px) {
+  .roles { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .find, .net-grid { grid-template-columns: minmax(0, 1fr); }
+  .stage { height: 62vh; min-height: 440px; }
+}
+@media (max-width: 820px) {
+  .topbar { flex-wrap: wrap; gap: 6px 10px; }
+  .nav { order: 3; flex-basis: 100%; justify-content: flex-start; }
+  .askbtn { margin-left: auto; }
+  .file-grid, .proof-grid, .file-top { grid-template-columns: minmax(0, 1fr); }
+  .api-form { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: 520px) {
+  .roles { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .role small { display: none; }
+  .topbar { margin: 8px 10px 0; }
+  .brand .bsub { display: none; }
+  .legend { display: none; }
+  .stage { min-height: 420px; }
+  .hint { display: none; }
+}
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: .001ms !important; animation-iteration-count: 1 !important; transition-duration: .001ms !important; }
+}
+</style>
+</head>
+<body>
+
+<div class="field-bg" aria-hidden="true"><i class="blob b1"></i><i class="blob b2"></i><i class="blob b3"></i></div>
+
+<div class="band" role="note"><i></i>FREE FOR FAMILIES · REAL FY2026 USDA INCOME LIMITS · 3FS IS NOT USDA · USDA OR AN APPROVED LENDER MAKES EVERY LOAN DECISION</div>
+
+<header class="topbar glass">
+  <a class="brand" href="#find" aria-label="3FS Rural Home">
+    <img class="mark" src="/brand/3fs-mark.svg" alt="" width="36" height="36">
+    <span><b>3FS <span style="color:var(--field)">Rural Home</span></b><span class="bsub">USDA home loans, made simple · <a href="https://3fs.app/" style="color:inherit">3fs.app</a></span></span>
+  </a>
+  <nav class="nav" aria-label="Pages">
+    <a href="#find" data-route="find">Find a place</a>
+    <a href="#file" data-route="file">My file</a>
+    <a href="#network" data-route="network">How it works</a>
+    <a href="#proof" data-route="proof">Proof</a>
+    <a href="#pricing" data-route="pricing">Pricing</a>
+    <a href="/blog/">Blog</a>
+  </nav>
+  <button class="askbtn" id="askOpen" type="button" aria-controls="ai"><span class="spark"></span>Ask the guide</button>
+</header>
+
+<main>
+  <!-- FIND -->
+  <section class="page" data-page="find" aria-labelledby="h-find">
+    <div class="row-head">
+      <h1 class="sr-only">USDA rural home loan eligibility check: FY2026 income limits by ZIP, city or county</h1>
+      <p class="eyebrow">Start here · who are you?</p>
+    </div>
+    <div class="roles" id="roles" role="group" aria-label="Who are you?"></div>
+
+    <div class="find">
+      <div class="stage glass" id="stage">
+        <canvas id="globe" aria-label="Globe map of the United States. Search for a place, or drag to turn and scroll to zoom. Select a county for its numbers." role="img"></canvas>
+        <div class="searchwrap">
+          <form class="search" id="searchForm" role="search" autocomplete="off">
+            <svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M10.5 3a7.5 7.5 0 0 1 5.9 12.1l4.2 4.2-1.4 1.4-4.2-4.2A7.5 7.5 0 1 1 10.5 3Zm0 2a5.5 5.5 0 1 0 0 11 5.5 5.5 0 0 0 0-11Z"/></svg>
+            <label class="sr-only" for="q">Address, city, county or ZIP</label>
+            <input id="q" type="search" placeholder="Type an address, city, county or ZIP" aria-autocomplete="list" aria-controls="sugg" aria-expanded="false">
+            <button class="btn primary" type="submit">Check</button>
+          </form>
+          <ul class="sugg" id="sugg" role="listbox" hidden></ul>
+        </div>
+        <div class="zoomctl">
+          <button type="button" id="zin" aria-label="Zoom in">+</button>
+          <button type="button" id="zout" aria-label="Zoom out">−</button>
+          <button type="button" id="zus" aria-label="Show whole country" title="Whole country">US</button>
+        </div>
+        <div class="layers" id="layers" role="group" aria-label="Map layers"></div>
+        <div class="legend glass" id="legend" aria-live="polite"></div>
+        <div class="hint" id="hint">Drag to spin · scroll to zoom · tap a county</div>
+      </div>
+
+      <aside>
+        <article class="glass card" id="answer" aria-live="polite"></article>
+        <article class="glass card near" id="near"></article>
+      </aside>
+    </div>
+  </section>
+
+  <!-- MY FILE -->
+  <section class="page" data-page="file" hidden aria-labelledby="h-file">
+    <div class="file-top">
+      <div>
+        <p class="eyebrow" id="fileEyebrow">My file</p>
+        <h1 id="h-file">One file. The guide does the rest.</h1>
+        <p class="lede" id="fileLede"></p>
+      </div>
+      <div class="seg" role="group" aria-label="How do you want to hand it in?">
+        <button type="button" id="modeAll" aria-pressed="true">Hand it all to us</button>
+        <button type="button" id="modePacket" aria-pressed="false">Just my packet</button>
+      </div>
+    </div>
+    <div class="glass track">
+      <div style="display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;align-items:baseline"><h2>Where your file is</h2><span class="small muted">Each step shows who decides it.</span></div>
+      <div class="sm-scroll"><ol class="sm" id="track"></ol></div>
+      <p class="mode-note" id="modeNote"></p>
+    </div>
+    <div class="file-grid">
+      <article class="glass card">
+        <div style="display:flex;justify-content:space-between;gap:10px;align-items:baseline;flex-wrap:wrap"><h2>What the guide needs from you</h2><span class="small muted" id="docCount"></span></div>
+        <ul class="docs" id="docs"></ul>
+        <p class="small muted" style="margin-top:10px">This is the usual list. The guide asks for anything extra your lender or USDA office needs.</p>
+      </article>
+      <div>
+        <label class="glass card drop" id="drop" tabindex="0">
+          <input type="file" id="fileIn" class="sr-only" multiple>
+          <b>Drop your documents here</b>
+          <span class="small muted">Each file is fingerprinted on your device. In this prototype nothing leaves your browser.</span>
+        </label>
+        <article class="glass card">
+          <h3>Fingerprints</h3>
+          <p class="small muted" style="margin-top:4px">A fingerprint (SHA-256) proves later that a document was not changed.</p>
+          <ul class="docs" id="prints"><li><span></span><span class="muted small">No files yet.</span><span></span></li></ul>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- NETWORK -->
+  <section class="page" data-page="network" hidden aria-labelledby="h-net">
+    <div style="margin-bottom:14px">
+      <p class="eyebrow">How it works</p>
+      <h1 id="h-net">One guide, many agents, one record.</h1>
+      <p class="lede">The guide sends each job to the agent built for it, checks every answer against the source, and keeps a fingerprint of each step. Tap a part to see what it does.</p>
+    </div>
+    <div class="net-grid">
+      <div class="glass card" style="padding:10px">
+        <svg class="net-svg" id="net" viewBox="0 0 900 600" role="img" aria-label="Network diagram of the 3FS Rural Home system"></svg>
+      </div>
+      <div>
+        <article class="glass card" style="padding:0;overflow:hidden;margin-bottom:14px;background:#fff"><video src="/brand/3fs-hero.mp4" poster="/brand/3fs-hero-poster.jpg" autoplay muted loop playsinline style="display:block;width:100%;height:auto" aria-label="The 3FS mark assembling"></video></article>
+        <article class="glass card" id="netInfo"></article>
+        <article class="glass card">
+          <div style="display:flex;justify-content:space-between;gap:8px;align-items:baseline;flex-wrap:wrap"><h2>The door for AI agents</h2><span class="status test">Test payments</span></div>
+          <p class="small muted" style="margin-top:6px">Other AI agents can ask the same question a family asks. They pay a small fee per check over x402 and get a signed answer that cites the source page.</p>
+          <form class="api-form" id="apiForm">
+            <label class="fld"><span>ZIP</span><input id="apiZip" inputmode="numeric" maxlength="5" value="30513"></label>
+            <label class="fld"><span>People</span><input id="apiSize" type="number" min="1" max="15" value="4"></label>
+            <label class="fld"><span>Income</span><input id="apiInc" type="number" min="0" step="1000" value="68000"></label>
+            <button class="btn dark" type="submit">Run</button>
+          </form>
+          <ol class="hs" id="apiSteps"></ol>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROOF -->
+  <section class="page" data-page="proof" hidden aria-labelledby="h-proof">
+    <div style="margin-bottom:14px">
+      <p class="eyebrow">Proof</p>
+      <h1 id="h-proof">Every number traces back to its source.</h1>
+      <p class="lede">Nothing here is estimated by AI. The limits come straight from USDA's published table, and you can check the file yourself.</p>
+    </div>
+    <div class="proof-grid">
+      <article class="glass card">
+        <h2>The income-limit source</h2>
+        <dl class="kv" id="srcKv"></dl>
+      </article>
+      <label class="glass card drop" id="pdfDrop" tabindex="0">
+        <input type="file" id="pdfIn" class="sr-only" accept="application/pdf">
+        <b>Check the source PDF yourself</b>
+        <span class="small muted">Drop USDA's RD-DirectLimitMap PDF here. It is fingerprinted on your device and compared to the copy this page was built from.</span>
+        <span class="hash" id="pdfRes" aria-live="polite"></span>
+      </label>
+      <article class="glass card">
+        <h2>Other data on the map</h2>
+        <dl class="kv" id="otherKv"></dl>
+      </article>
+
+      <article class="glass card" id="resources">
+        <h2>Downloads</h2>
+        <p class="small muted" style="margin-top:4px">Printable guides with the same numbers as the site. Free to share.</p>
+        <ul class="docs" style="margin-top:10px">
+          <li><span class="ck" style="background:var(--field);border-color:var(--field)">✓</span><span><b style="font-weight:600"><a href="/docs/3fs-usda-program-guide.pdf" target="_blank" rel="noopener">USDA loan guide</a></b><small>Direct vs Guaranteed, FY2026 limits, how to apply. 2 pages.</small></span><span class="h">PDF</span></li>
+          <li><span class="ck" style="background:var(--field);border-color:var(--field)">✓</span><span><b style="font-weight:600"><a href="/docs/3fs-document-checklist.pdf" target="_blank" rel="noopener">Document checklist</a></b><small>Everything to gather, with checkboxes.</small></span><span class="h">PDF</span></li>
+          <li><span class="ck" style="background:var(--field);border-color:var(--field)">✓</span><span><b style="font-weight:600"><a href="/docs/3fs-income-limits-2026-georgia.pdf" target="_blank" rel="noopener">Georgia income limits, FY2026</a></b><small>Every income area with both limits and page numbers.</small></span><span class="h">PDF</span></li>
+          <li><span class="ck" style="background:var(--field);border-color:var(--field)">✓</span><span><b style="font-weight:600"><a href="/docs/3fs-rural-home-overview.pdf" target="_blank" rel="noopener">3FS Rural Home overview</a></b><small>The one-page framework poster.</small></span><span class="h">PDF</span></li>
+        </ul>
+        <p class="small muted" style="margin-top:10px">Need another state's table? Email <a href="mailto:kevan@unykorn.org">kevan@unykorn.org</a>.</p>
+      </article>
+      <article class="glass card">
+        <h2>What is still being built</h2>
+        <ul class="limits-list" id="gaps"></ul>
+      </article>
+    </div>
+  </section>
+
+  <!-- PRICING -->
+  <section class="page" data-page="pricing" hidden aria-labelledby="h-price">
+    <div style="margin-bottom:14px">
+      <p class="eyebrow">Pricing</p>
+      <h1 id="h-price">Free for families. Simple for pros.</h1>
+      <p class="lede">Families never pay 3FS. Professionals pay one flat monthly price. AI agents pay a few cents per check.</p>
+    </div>
+    <div class="plans">
+      <article class="glass card plan">
+        <p class="eyebrow">Families and buyers</p>
+        <div class="price">Free</div>
+        <ul><li>Check any place in the country</li><li>Your Direct and Guaranteed limits, with the source page</li><li>Every place nearby where you qualify</li><li>The guide builds and checks your file</li></ul>
+        <a class="btn" href="#find">Find a place</a>
+      </article>
+      <article class="glass card plan hot">
+        <p class="eyebrow">Pro · builders, realtors, lenders, nonprofits</p>
+        <div class="price">$49 <small>per month</small></div>
+        <ul><li>Bulk check whole lists of ZIPs or addresses</li><li>Download results as a spreadsheet</li><li>Your own API key: unlimited checks</li><li>Everything families get</li></ul>
+        <a class="btn primary" href="https://buy.stripe.com/28E8wQbaf2iKg4V2em9AA0y" target="_blank" rel="noopener">Get Pro</a>
+        <p class="small muted">Cancel anytime. Billed monthly by UnyKorn LLC through Stripe.</p>
+      </article>
+      <article class="glass card plan">
+        <p class="eyebrow">AI agents</p>
+        <div class="price">$0.02 <small>per check</small></div>
+        <ul><li>Same sourced answer a family gets</li><li>Paid per call in USDC over x402</li><li>No account, no key</li></ul>
+        <pre class="code">curl "https://usda.3fs.app/api/check?zip=30513&amp;people=4&amp;income=68000"
+# 402 Payment Required -> pay -> 200 with the answer</pre>
+      </article>
+    </div>
+    <div class="pro-grid">
+      <article class="glass card" id="proBox" aria-live="polite"></article>
+      <article class="glass card bulk" id="bulk">
+        <div style="display:flex;justify-content:space-between;gap:8px;align-items:baseline;flex-wrap:wrap"><h2>Bulk check</h2><span class="lock" id="bulkLock">Pro</span></div>
+        <p class="small muted" style="margin-top:6px">One per line: ZIP or "City, ST", then people, then yearly income. Or upload a CSV in the same order.</p>
+        <label class="sr-only" for="bulkIn">List to check</label>
+        <textarea id="bulkIn" style="margin-top:10px">30513, 4, 68000
+Macon, GA, 5, 72000
+31533, 3, 54000
+Gainesville, FL, 4, 91000</textarea>
+        <div class="cta" style="margin-top:10px"><button class="btn primary" type="button" id="bulkRun">Check the list</button><label class="btn" for="bulkFile" style="text-align:center">Upload CSV</label><input type="file" id="bulkFile" accept=".csv,.txt" class="sr-only"><button class="btn" type="button" id="bulkDl" disabled>Download results</button></div>
+        <div class="tbl-wrap"><table class="tbl" id="bulkOut"></table></div>
+      </article>
+    </div>
+
+    <article class="glass card" id="terminal" style="margin-top:14px">
+      <div style="display:flex;justify-content:space-between;gap:8px;align-items:baseline;flex-wrap:wrap"><h2>Use it from your terminal</h2><span class="status live">Live</span></div>
+      <p class="small muted" style="margin-top:6px">Plug 3FS Rural Home into Claude Code or any AI agent that speaks MCP. Free for 25 checks a day; add your Pro key for unlimited.</p>
+      <div class="pro-grid" style="margin-top:6px">
+        <div><b style="font-size:13.5px">Claude Code</b><pre class="code">claude mcp add --transport http usda-3fs https://usda.3fs.app/mcp
+
+# with your Pro key (unlimited)
+claude mcp add --transport http usda-3fs https://usda.3fs.app/mcp \
+  --header "Authorization: Bearer rh_your_key"</pre><p class="small muted" style="margin-top:6px">Then just ask: "Can a family of 5 making $72k get a USDA loan near 31201?"</p></div>
+        <div><b style="font-size:13.5px">Any terminal</b><pre class="code"># Mac / Linux
+curl -s https://usda.3fs.app/mcp -H "content-type: application/json" \
+  -d '{"jsonrpc":"2.0","id":1,"method":"tools/call","params":{"name":"check_zip","arguments":{"zip":"30513","people":4,"income":68000}}}'
+
+# Windows PowerShell
+$body = '{"jsonrpc":"2.0","id":1,"method":"tools/call","params":{"name":"check_zip","arguments":{"zip":"30513","people":4,"income":68000}}}'
+(Invoke-RestMethod https://usda.3fs.app/mcp -Method Post -ContentType 'application/json' -Body $body).result.content[0].text</pre><p class="small muted" style="margin-top:6px">Tools: check_zip, where_qualify, opportunity_zones, program_info.</p></div>
+      </div>
+    </article>
+  </section>
+</main>
+
+<aside class="ai glass" id="ai" hidden aria-labelledby="aiTitle">
+  <div class="ai-head">
+    <img class="mark" src="/brand/3fs-mark.svg" alt="" width="32" height="32">
+    <h2 id="aiTitle">Your guide<small id="aiSub">Plain answers, with the source for every number.</small></h2>
+    <button class="x" id="askClose" type="button" aria-label="Close guide">✕</button>
+  </div>
+  <div class="agents" id="agents" aria-label="Agents at work"></div>
+  <div class="chat" id="chat" aria-live="polite"></div>
+  <div class="starters" id="starters"></div>
+  <form id="askForm" autocomplete="off">
+    <label class="sr-only" for="askIn">Ask the guide</label>
+    <input id="askIn" placeholder="e.g. Family of 5, we make $72k, near Macon GA">
+    <button class="btn primary" type="submit" id="askSend">Send</button>
+  </form>
+</aside>
+
+<footer class="foot">
+  <span style="display:inline-flex;align-items:center;gap:8px"><img src="/brand/3fs-mark.svg" alt="" width="22" height="22"><b>3FS</b> · <a href="https://3fs.app/">3fs.app</a> · a UnyKorn LLC system</span>
+  <span>Not affiliated with or endorsed by USDA. USDA Rural Development or an approved lender makes every loan decision.</span>
+  <span>Income limits: FY2026, HB-1-3550 Appendix 9 (PN 657)</span>
+</footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.9.0/d3.min.js" integrity="sha384-CjloA8y00+1SDAUkjs099PVfnY2KmDC2BZnws9kh8D/lX1s46w6EPhpXdqMfjK6i" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/topojson-client@3.1.0/dist/topojson-client.min.js" integrity="sha384-Ukv1p/xTma6P4/2bY5KzWBw+ydSpXmhCMtyciIQVDJ1RmOxtCYNMF1uXT9T63H67" crossorigin="anonymous"></script>
+<script src="/data.js"></script>
+<script src="/app.js"></script>
+</body>
+</html>
+

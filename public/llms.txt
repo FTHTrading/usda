@@ -1,0 +1,27 @@
+# 3FS Rural Home
+
+> Free USDA rural home loan check at https://usda.3fs.app. Enter a ZIP, city or county and household size to see the FY2026 USDA Direct (low-income) and Guaranteed (moderate-income) limits, whether the area is rural, Opportunity Zone counts, and nearby places where the household qualifies. Every number cites its page in USDA Handbook HB-1-3550 Appendix 9 (PN 657, 07/13/2026).
+
+Operated by UnyKorn LLC (Norcross, Georgia). Not affiliated with USDA. Not a lender or broker. USDA Rural Development or an approved lender makes every loan decision.
+
+## Key facts
+- Direct loan: USDA lends to the household; uses the low-income limit; apply through the local USDA Rural Development office, often via a certified packager.
+- Guaranteed loan: an approved lender lends and USDA backs it; uses the moderate-income limit; no down payment required.
+- 2,065 of 2,724 USDA income areas use the same FY2026 4-person Guaranteed limit of $122,800 (the national floor); limits rise for 5-8 people and in higher-cost metros.
+- Families use the site free. Pro for professionals is $49/month. AI agents pay $0.02 per check over x402 (USDC on Base).
+
+## For AI agents
+- MCP server (Streamable HTTP): https://usda.3fs.app/mcp  (tools: check_zip, where_qualify, opportunity_zones, program_info)
+- Paid API: GET https://usda.3fs.app/api/check?zip=30513&people=4&income=68000  (x402, $0.02 USDC)
+- Health: https://usda.3fs.app/api/health
+
+## Pages
+- [Check a place](https://usda.3fs.app/)
+- [About and disclosures](https://usda.3fs.app/about)
+- [Blog](https://usda.3fs.app/blog/)
+- [What is a USDA home loan, and who is it for?](https://usda.3fs.app/blog/what-is-a-usda-home-loan/): A USDA home loan helps people buy or build in rural areas, often with no down payment. Here is who it is for, the two kinds, and the three things you need.
+- [USDA income limits for 2026: how to read them and where most of the country lands](https://usda.3fs.app/blog/usda-income-limits-2026/): FY2026 USDA income limits explained. 2,065 of 2,724 areas share the same $122,800 Guaranteed limit for a family of four; higher-cost metros go up from there. How household size changes it.
+- [USDA Direct vs Guaranteed loans: which one is yours?](https://usda.3fs.app/blog/usda-direct-vs-guaranteed/): The difference between a USDA Direct loan (USDA lends, for lower incomes, with payment assistance) and a Guaranteed loan (a lender lends, USDA backs it). How to tell which one fits your income.
+- [How young adults are buying a first home with no down payment](https://usda.3fs.app/blog/first-home-no-down-payment-usda/): A step-by-step path for a young adult or young family to buy a first home with a USDA loan and no down payment: what to check, what to gather, who to call, and what to expect.
+- [How to tell if an address is in a USDA eligible area](https://usda.3fs.app/blog/usda-eligible-area-map/): What "rural" means for USDA loans, why towns up to about 35,000 people can qualify, how to read the area type on the 3FS map, and how to confirm an exact address on USDA's eligibility site.
+- [For builders: where USDA buyers are, and how to plan homes for them](https://usda.3fs.app/blog/builders-usda-rural-homes/): How home builders use USDA Guaranteed and Direct loans to sell new homes in rural and exurban areas: find qualifying buyers by ZIP, overlap Opportunity Zones, and build to USDA's modest-home standard.

@@ -1,40 +1,22 @@
 {
-  "name": "@fthtrading/usda-rural-os",
-  "version": "2.4.0",
-  "description": "USDA Section 502 Single-Close Rural Construction & 3FS Operating Workspace Platform",
+  "name": "usda-3fs",
+  "version": "1.0.0",
+  "private": true,
   "type": "module",
-  "main": "server.js",
+  "description": "3FS Rural Home (usda.3fs.app): free USDA rural home loan check with FY2026 income limits, AI guide, x402 agent API and MCP server. Cloudflare Pages + Functions + D1 + Workers AI.",
+  "license": "MIT",
   "scripts": {
-    "start": "node server.js",
-    "dev": "node server.js",
-    "test": "node --test tests/usda-suite.test.js",
-    "deploy": "wrangler pages deploy . --project-name usda-3fs --branch main",
-    "whitelabel": "node scripts/apply-whitelabel.js",
-    "lint": "node --check server.js"
+    "test": "node --test tests/*.test.mjs",
+    "check": "node --check functions/_lib.js && node --check functions/_cdp.js && node --check functions/mcp.js && for f in functions/api/*.js functions/api/*/*.js; do node --check $f || exit 1; done && node --check public/app.js",
+    "dev": "wrangler pages dev ./public",
+    "deploy": "wrangler pages deploy ./public --project-name usda-3fs --commit-dirty=true",
+    "blog": "python3 tools/build-blog.py"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/FTHTrading/usda.git"
+  "dependencies": {
+    "pdf-lib": "1.17.1"
   },
-  "bugs": {
-    "url": "https://github.com/FTHTrading/usda/issues"
+  "devDependencies": {
+    "wrangler": "^4"
   },
-  "homepage": "https://usda.3fs.app",
-  "keywords": [
-    "usda",
-    "section-502",
-    "rural-housing",
-    "single-close",
-    "construction-loan",
-    "zero-down",
-    "whitelabel",
-    "3fs",
-    "gis-radar",
-    "jspdf",
-    "ai-workspace",
-    "building-code",
-    "net-zero"
-  ],
-  "author": "FTHTrading <kevanbtc@gmail.com> (https://github.com/FTHTrading)",
-  "license": "Apache-2.0"
+  "engines": { "node": ">=20" }
 }

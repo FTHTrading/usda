@@ -1,4 +1,4 @@
-name: CI Test Suite
+name: CI
 
 on:
   push:
@@ -9,21 +9,12 @@ on:
 jobs:
   test:
     runs-on: ubuntu-latest
-
-    strategy:
-      matrix:
-        node-version: [18.x, 20.x, 22.x]
-
     steps:
-    - uses: actions/checkout@v4
-
-    - name: Use Node.js ${{ matrix.node-version }}
-      uses: actions/setup-node@v4
-      with:
-        node-version: ${{ matrix.node-version }}
-
-    - name: Run Mathematical & Underwriting Test Suite
-      run: npm test
-
-    - name: Validate Whitelabel Configuration Engine
-      run: npm run whitelabel -- --validate
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - name: Syntax check every Function and the client
+        run: npm run check
+      - name: Income-limit engine tests
+        run: npm test

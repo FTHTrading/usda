@@ -1,0 +1,20 @@
+name = "usda-3fs"
+pages_build_output_dir = "./public"
+compatibility_date = "2026-09-01"
+
+[ai]
+binding = "AI"
+
+[[d1_databases]]
+binding = "DB"
+database_name = "usda-3fs"
+database_id = "30da0ed0-b676-424e-86a4-4527ba4a01bd"
+
+[vars]
+SITE = "https://usda.3fs.app"
+PRO_LINK = "https://buy.stripe.com/28E8wQbaf2iKg4V2em9AA0y"
+X402_PRICE_USDC = "0.02"
+X402_NETWORK = "base"
+X402_FACILITATOR_URL = "https://x402.org/facilitator"
+X402_PAY_TO = "0xFCc1D28Ad797d65CDDb2A7219c5BE6B062653cb3"
+# Secrets (set with wrangler pages secret put): STRIPE_WEBHOOK_SECRET, CDP_API_KEY_ID, CDP_API_KEY_SECRET
