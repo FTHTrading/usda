@@ -1,6 +1,7 @@
 // Master Project Overview View: Single Project Record Dashboard
 // Displays: Current stage, next action, party-and-authority record, budget/timeline, permit status, carbon status, and blockers.
 import { PROJECT_RECORD } from '../data/project-record.js';
+import { ICONS, getIcon } from './icons.js';
 
 export class USDAProjectOverviewView {
   constructor(containerId) {
@@ -30,10 +31,10 @@ export class USDAProjectOverviewView {
             <div class="project-scope-toggle-group">
               <span style="font-size: 0.75rem; font-weight: 700; color: var(--text-muted); margin-right: 0.4rem;">Scope:</span>
               <button class="scope-toggle-btn ${isNew ? 'active' : ''}" id="btn-toggle-new-build">
-                🌲 New Construction
+                ${getIcon('construction', '', 14)} New Construction
               </button>
               <button class="scope-toggle-btn ${!isNew ? 'active' : ''}" id="btn-toggle-renovation">
-                🔨 Major Renovation / Retrofit
+                ${getIcon('layers', '', 14)} Major Renovation / Retrofit
               </button>
             </div>
           </div>
@@ -47,7 +48,7 @@ export class USDAProjectOverviewView {
               <div>
                 <h1 class="hero-title-glass" style="font-size: 1.65rem;">${this.record.name}</h1>
                 <p class="hero-subtext-glass" style="margin-top: 0.25rem;">
-                  📍 ${this.record.address} · Parcel ${this.record.parcelId} (${this.record.lotAcreage} Acres) · ${this.record.buildingUse}
+                  ${getIcon('pin', '', 14)} ${this.record.address} · Parcel ${this.record.parcelId} (${this.record.lotAcreage} Acres) · ${this.record.buildingUse}
                 </p>
                 <div style="display: flex; align-items: center; gap: 0.5rem; margin-top: 0.4rem; font-size: 0.72rem; color: var(--text-dim); flex-wrap: wrap;">
                   <span style="font-weight: 700; color: #a30d22; font-family: var(--font-mono);">3FS OPERATING ENGINE</span>
@@ -63,17 +64,17 @@ export class USDAProjectOverviewView {
             </div>
             <div class="hero-actions-flex">
               <button class="btn-glass-primary" id="btn-overview-ai-copilot">
-                <span>🤖</span> AI Project Workflow
+                ${getIcon('sparkles', '', 16)} AI Project Workflow
               </button>
               <button class="btn-glass-secondary" id="btn-overview-download-brief">
-                <span>📄</span> Export Project Brief PDF
+                ${getIcon('download', '', 16)} Export Project Brief PDF
               </button>
             </div>
           </div>
 
           <!-- Consequential Next Useful Action Banner -->
           <div class="next-action-strip" style="margin-top: 1.25rem;">
-            <div class="next-action-icon">⚡</div>
+            <div class="next-action-icon">${getIcon('activity', '', 20)}</div>
             <div class="next-action-text">
               <div style="display: flex; align-items: center; gap: 0.5rem;">
                 <span class="next-action-label">CURRENT STAGE: ${this.record.currentStage}</span>
@@ -297,56 +298,56 @@ export class USDAProjectOverviewView {
 
           <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 0.85rem;">
             <div class="quick-tool-card" id="card-nav-feasibility">
-              <div class="tool-icon">🛰️</div>
+              <div class="tool-icon">${getIcon('radar')}</div>
               <div class="tool-meta">
                 <h4>Site & Feasibility</h4>
                 <p>Zoning, GIS radar, USACE buffer, utilities, and soil investigations.</p>
               </div>
             </div>
             <div class="quick-tool-card" id="card-nav-design">
-              <div class="tool-icon">📐</div>
+              <div class="tool-icon">${getIcon('design')}</div>
               <div class="tool-meta">
                 <h4>Design Coordination</h4>
                 <p>Versioned packages (v2.4), drawings, specs, and change propagation.</p>
               </div>
             </div>
             <div class="quick-tool-card" id="card-nav-compliance">
-              <div class="tool-icon">⚖️</div>
+              <div class="tool-icon">${getIcon('compliance')}</div>
               <div class="tool-meta">
                 <h4>Building Codes</h4>
                 <p>GA Minimum Standards, 2018 IRC/IBC, traceable compliance matrix.</p>
               </div>
             </div>
             <div class="quick-tool-card" id="card-nav-carbon">
-              <div class="tool-icon">🌱</div>
+              <div class="tool-icon">${getIcon('carbon')}</div>
               <div class="tool-meta">
                 <h4>Carbon & Net Zero</h4>
                 <p>Operational EUI (18.4), embodied LCA, EPD library, design comparisons.</p>
               </div>
             </div>
             <div class="quick-tool-card" id="card-nav-applications">
-              <div class="tool-icon">📋</div>
+              <div class="tool-icon">${getIcon('permits')}</div>
               <div class="tool-meta">
                 <h4>Permits & USDA</h4>
                 <p>Dawson County building permit, septic, Land Disturbance, and Form 3555-SC.</p>
               </div>
             </div>
             <div class="quick-tool-card" id="card-nav-build">
-              <div class="tool-icon">🏗️</div>
+              <div class="tool-icon">${getIcon('construction')}</div>
               <div class="tool-meta">
                 <h4>Construction & Draws</h4>
                 <p>5-stage escrow draws, 10% retainage, RFIs, field inspection checkpoints.</p>
               </div>
             </div>
             <div class="quick-tool-card" id="card-nav-handover">
-              <div class="tool-icon">🔑</div>
+              <div class="tool-icon">${getIcon('handover')}</div>
               <div class="tool-meta">
                 <h4>Handover & Ops</h4>
                 <p>As-builts, 5 warranty trackers, O&M manuals, and smart meter monitoring.</p>
               </div>
             </div>
             <div class="quick-tool-card" id="card-nav-docs">
-              <div class="tool-icon">📄</div>
+              <div class="tool-icon">${getIcon('documents')}</div>
               <div class="tool-meta">
                 <h4>Real PDF Generator</h4>
                 <p>Export all 7 official vector documents directly from client-side jsPDF.</p>

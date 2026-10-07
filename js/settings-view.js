@@ -1,4 +1,6 @@
 // Settings & 3FS Deployment View: Cloudflare Pages Subsite Status, Routing & Environment
+import { ICONS, getIcon } from './icons.js';
+
 export class USDASettingsView {
   constructor(containerId) {
     this.container = document.getElementById(containerId);
@@ -33,7 +35,7 @@ export class USDASettingsView {
             <div class="endpoint-cards-list">
               <!-- Endpoint 1: Production Custom Domain -->
               <div class="endpoint-card card-primary-edge">
-                <div class="endpoint-icon">🌐</div>
+                <div class="endpoint-icon">${getIcon('globe', '', 20)}</div>
                 <div class="endpoint-meta">
                   <div class="endpoint-top-row">
                     <span class="endpoint-label">PRODUCTION SUBSITE:</span>
@@ -46,7 +48,7 @@ export class USDASettingsView {
 
               <!-- Endpoint 2: Pages Dev Preview -->
               <div class="endpoint-card">
-                <div class="endpoint-icon">⚡</div>
+                <div class="endpoint-icon">${getIcon('activity', '', 20)}</div>
                 <div class="endpoint-meta">
                   <div class="endpoint-top-row">
                     <span class="endpoint-label">PAGES PREVIEW:</span>
@@ -59,7 +61,7 @@ export class USDASettingsView {
 
               <!-- Endpoint 3: Local Host -->
               <div class="endpoint-card">
-                <div class="endpoint-icon">💻</div>
+                <div class="endpoint-icon">${getIcon('calculator', '', 20)}</div>
                 <div class="endpoint-meta">
                   <div class="endpoint-top-row">
                     <span class="endpoint-label">LOCAL WORKSPACE:</span>
@@ -142,8 +144,8 @@ export class USDASettingsView {
               <h2 class="panel-title" style="margin-top: 0.35rem;">3FS Sovereign Ecosystem & Brand System</h2>
               <p class="panel-subtitle">Original brand marks, precision vector SVGs, motion assets, and three-framework evidence stack.</p>
             </div>
-            <a href="https://pay.3fs.app" target="_blank" rel="noopener noreferrer" class="btn-glass-secondary" style="font-size: 0.8rem; text-decoration: none;">
-              <span>🌐</span> Visit pay.3fs.app ↗
+            <a href="https://pay.3fs.app" target="_blank" rel="noopener noreferrer" class="btn-glass-secondary" style="font-size: 0.8rem; text-decoration: none; display: inline-flex; align-items: center; gap: 0.4rem;">
+              ${getIcon('globe', '', 14)} Visit pay.3fs.app ↗
             </a>
           </div>
 

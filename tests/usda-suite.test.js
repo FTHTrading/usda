@@ -318,6 +318,27 @@ describe('13. Headless REST API Gateway & Federal Integration Endpoints', () => 
     assert.ok(data.tenant.organizationName);
     assert.ok(data.branding.primaryColor);
   });
+
+  test('GET & POST /api/v1/ai/guidance returns intelligent guidance and target views', async () => {
+    const getRes = await fetch(`${BASE_URL}/api/v1/ai/guidance?q=how+do+i+qualify+with+income+deductions`);
+    assert.equal(getRes.status, 200);
+    const getData = await getRes.json();
+    assert.equal(getData.success, true);
+    assert.equal(getData.response.targetTab, 'calc-suite');
+    assert.ok(getData.response.guidance.length > 0);
+
+    const postRes = await fetch(`${BASE_URL}/api/v1/ai/guidance`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ prompt: 'check my lake lanier parcel elevation and map' })
+    });
+    assert.equal(postRes.status, 200);
+    const postData = await postRes.json();
+    assert.equal(postData.success, true);
+    assert.equal(postData.response.targetTab, 'map-radar');
+    assert.ok(postData.response.citation.includes('7 CFR § 3555'));
+  });
 });
+
 
 

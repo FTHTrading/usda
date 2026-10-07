@@ -9,6 +9,7 @@
 // 7. Building Handover & Operations Pack
 
 import { PROJECT_RECORD } from '../data/project-record.js';
+import { ICONS, getIcon } from './icons.js';
 
 export class USDAPDFEngine {
   constructor(containerId) {
@@ -41,10 +42,10 @@ export class USDAPDFEngine {
 
           <div class="doc-toolbar-actions">
             <button class="btn-download-pdf-real" id="btn-trigger-pdf-download">
-              <span>📥</span> Download Active PDF (.pdf)
+              ${getIcon('download', '', 14)} Download Active PDF (.pdf)
             </button>
             <button class="btn-print-doc" id="btn-trigger-print">
-              <span>🖨️</span> Print / Save Copy
+              ${getIcon('printer', '', 14)} Print / Save Copy
             </button>
           </div>
         </div>
@@ -54,25 +55,25 @@ export class USDAPDFEngine {
           <div style="display: flex; align-items: center; gap: 0.5rem; flex-wrap: wrap;">
             <span style="font-size: 0.72rem; font-weight: 800; color: var(--text-dim); text-transform: uppercase; margin-right: 0.25rem;">Select Document:</span>
             <button class="calc-chip-btn ${this.activeDoc === 'dossier' ? 'active' : ''}" data-doc="dossier">
-              🏛️ 1. Form 3555-SC Dossier
+              ${getIcon('compliance', '', 14)} 1. Form 3555-SC Dossier
             </button>
             <button class="calc-chip-btn ${this.activeDoc === 'brief' ? 'active' : ''}" data-doc="brief">
-              📋 2. Structured Project Brief
+              ${getIcon('permits', '', 14)} 2. Structured Project Brief
             </button>
             <button class="calc-chip-btn ${this.activeDoc === 'feasibility' ? 'active' : ''}" data-doc="feasibility">
-              🛰️ 3. Site Feasibility Report
+              ${getIcon('radar', '', 14)} 3. Site Feasibility Report
             </button>
             <button class="calc-chip-btn ${this.activeDoc === 'code-matrix' ? 'active' : ''}" data-doc="code-matrix">
-              ⚖️ 4. Code Compliance Matrix
+              ${getIcon('compliance', '', 14)} 4. Code Compliance Matrix
             </button>
             <button class="calc-chip-btn ${this.activeDoc === 'carbon' ? 'active' : ''}" data-doc="carbon">
-              🌱 5. Carbon & Net-Zero Assessment
+              ${getIcon('carbon', '', 14)} 5. Carbon & Net-Zero Assessment
             </button>
             <button class="calc-chip-btn ${this.activeDoc === 'permit-pack' ? 'active' : ''}" data-doc="permit-pack">
-              📑 6. Dawson County Permit Pack
+              ${getIcon('documents', '', 14)} 6. Dawson County Permit Pack
             </button>
             <button class="calc-chip-btn ${this.activeDoc === 'handover' ? 'active' : ''}" data-doc="handover">
-              🔑 7. Building Handover Pack
+              ${getIcon('handover', '', 14)} 7. Building Handover Pack
             </button>
           </div>
         </div>

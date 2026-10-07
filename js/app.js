@@ -20,11 +20,13 @@ import { USDAScreener } from './screener.js';
 import { USDAIncomeEngine } from './income-engine.js';
 import { USDAFeasibilityMatrix } from './feasibility.js';
 import { USDAHotspots } from './hotspots.js';
+import { USDAGuidedAINavigator } from './guided-ai-navigator.js';
 
 class USDAApp {
   constructor() {
     this.activeTab = 'overview';
     this.modules = {};
+    this.guidedNavigator = null;
     this.init();
   }
 
@@ -57,6 +59,9 @@ class USDAApp {
     this.modules.income = new USDAIncomeEngine('income-container');
     this.modules.feasibility = new USDAFeasibilityMatrix('feasibility-container');
     this.modules.hotspots = new USDAHotspots('hotspots-container');
+
+    // 5. Interactive USDA AI Guided Navigator & Copilot
+    this.guidedNavigator = new USDAGuidedAINavigator();
 
     this.bindNavigation();
     this.bindGlobalSearch();

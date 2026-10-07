@@ -61,7 +61,7 @@ export class USDASecretTricks {
         <div class="arbitrage-simulator-box">
           <div class="sim-header">
             <div>
-              <h3 class="card-title">⚡ Live Arbitrage Simulator: The 'Atlanta MSA + Childcare' Double Loophole</h3>
+              <h3 class="card-title">Live Arbitrage Simulator: The 'Atlanta MSA + Childcare' Double Loophole</h3>
               <p class="card-subtitle">See how combining Loophole #1 (MSA Arbitrage) and Loophole #2 (Childcare Shield) flips an over-income family into an approved zero-down deal.</p>
             </div>
           </div>
@@ -123,16 +123,16 @@ export class USDASecretTricks {
         </div>
 
         <div class="inspect-content-block highlight-tactics-box">
-          <h4 class="block-title font-emerald">🎯 How to Execute This in Practice:</h4>
+          <h4 class="block-title font-emerald">How to Execute This in Practice:</h4>
           <p class="block-text">${secret.howToUse}</p>
         </div>
 
         <div class="inspect-checklist-box">
           <h4 class="block-title">Underwriter Document Requirements:</h4>
           <ul class="inspect-doc-list">
-            <li>✔️ Formal Loan Application (Form RD 3555-21)</li>
-            <li>✔️ Verified documentation (W-2s, tax returns, licensed daycare provider invoices)</li>
-            <li>✔️ Certified engineer plot plan or architectural appraisal confirming compliance</li>
+            <li>Formal Loan Application (Form RD 3555-21)</li>
+            <li>Verified documentation (W-2s, tax returns, licensed daycare provider invoices)</li>
+            <li>Certified engineer plot plan or architectural appraisal confirming compliance</li>
           </ul>
         </div>
       </div>
@@ -166,13 +166,13 @@ export class USDASecretTricks {
         </div>
         <div class="sim-res-box ${passes ? 'sim-pass' : 'sim-fail'}">
           <span class="s-k">Verdict:</span>
-          <span class="s-v font-bold">${passes ? '✅ 100% QUALIFIED' : '❌ EXCEEDS CAP'}</span>
+          <span class="s-v font-bold">${passes ? 'PASSED: 100% QUALIFIED' : 'DISQUALIFIED: EXCEEDS CAP'}</span>
         </div>
       </div>
       <div class="sim-takeaway-note">
         ${passes 
-          ? `🔥 <strong>The Arbitrage Result:</strong> While this household appeared to be $${(gross - cap).toLocaleString()} over the limit, applying the MSA ceiling + childcare shelter brought them <strong>$${Math.round(margin).toLocaleString()} under the ceiling</strong>! They qualify for $0 down with zero issue.`
-          : `⚠️ Still exceeds the ceiling by $${Math.abs(Math.round(margin)).toLocaleString()}. Switch to Dawson County for the higher $135.5k cap or check for elderly/medical deductions.`}
+          ? `<strong>The Arbitrage Result:</strong> While this household appeared to be $${(gross - cap).toLocaleString()} over the limit, applying the MSA ceiling + childcare shelter brought them <strong>$${Math.round(margin).toLocaleString()} under the ceiling</strong>! They qualify for $0 down with zero issue.`
+          : `Still exceeds the ceiling by $${Math.abs(Math.round(margin)).toLocaleString()}. Switch to Dawson County for the higher $135.5k cap or check for elderly/medical deductions.`}
       </div>
     `;
   }

@@ -1,5 +1,6 @@
 // Screener Module: Interactive County, City & USDA GIS Boundary Evaluator
 import { GEORGIA_REGIONS } from '../data/georgia-counties.js';
+import { ICONS, getIcon } from './icons.js';
 
 export class USDAScreener {
   constructor(containerId) {
@@ -19,7 +20,7 @@ export class USDAScreener {
         <!-- Left: Search & Region List -->
         <div class="screener-sidebar">
           <div class="search-box">
-            <span class="search-icon">🔍</span>
+            <span class="search-icon">${getIcon('search', '', 14)}</span>
             <input type="text" id="geo-search-input" placeholder="Search address, county, or city (e.g. Dawsonville, Alpharetta, Gainesville)..." />
           </div>
 
@@ -65,7 +66,7 @@ export class USDAScreener {
 
           <!-- Address Verifier & USDA Gateway -->
           <div class="usda-portal-bridge">
-            <div class="bridge-icon">🏛️</div>
+            <div class="bridge-icon">${getIcon('compliance', '', 24)}</div>
             <div class="bridge-content">
               <h4>Official USDA RD Parcel Map Verification</h4>
               <p>While regional screening classifies county zones, USDA Section 502 requires exact parcel verification down to the GPS pin before contract execution.</p>
@@ -73,7 +74,7 @@ export class USDAScreener {
                 <a href="https://eligibility.sc.egov.usda.gov/eligibility/welcomeAction.do?pageAction=sfp" target="_blank" rel="noopener noreferrer" class="btn-primary">
                   Open Official USDA Eligibility GIS Map ↗
                 </a>
-                <button id="btn-copy-checklist" class="btn-secondary">📋 Copy Parcel Due-Diligence Checklist</button>
+                <button id="btn-copy-checklist" class="btn-secondary">${getIcon('documents', '', 14)} Copy Parcel Due-Diligence Checklist</button>
               </div>
             </div>
           </div>
@@ -243,19 +244,19 @@ export class USDAScreener {
 
       <div class="intel-warnings">
         <div class="alert-box alert-usace">
-          <div class="alert-title">🌊 Lake Lanier & U.S. Army Corps of Engineers (USACE) Protocol</div>
+          <div class="alert-title">Lake Lanier & U.S. Army Corps of Engineers (USACE) Protocol</div>
           <p>${county.corpsWarning}</p>
           <div class="usace-rule-tag">Key Rule: Private dock rights are revocable licenses, not deeded land. USDA loans will not finance unpermitted USACE shoreline alterations.</div>
         </div>
 
         <div class="alert-box alert-zoning">
-          <div class="alert-title">📐 Zoning & Building Feasibility</div>
+          <div class="alert-title">Zoning & Building Feasibility</div>
           <p><strong>Zoning:</strong> ${county.zoningNotes}</p>
           <p><strong>Hotspot Towns:</strong> ${county.keyTowns.join(", ")}</p>
         </div>
 
         <div class="alert-box alert-recommendation">
-          <div class="alert-title">💡 Underwriter Verdict & Strategy</div>
+          <div class="alert-title">Underwriter Verdict & Strategy</div>
           <p>${county.recommendation}</p>
         </div>
       </div>

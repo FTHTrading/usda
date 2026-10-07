@@ -1,6 +1,7 @@
 // Unified Calculator Suite & Financial Engineering Hub
 // Surfaces all 8 internal USDA financial engines, pro-formas, and regulatory estimators.
 import { GEORGIA_REGIONS, USDA_CONSTRUCTION_PARAMS, USDA_DEDUCTION_RULES } from '../data/georgia-counties.js';
+import { ICONS, getIcon } from './icons.js';
 
 export class USDACalculatorSuite {
   constructor(containerId) {
@@ -31,31 +32,31 @@ export class USDACalculatorSuite {
           <!-- Quick Calculator Selector Bar -->
           <div class="calc-selector-chips">
             <button class="calc-chip-btn ${this.activeCalc === 'single-close' ? 'active' : ''}" data-calc="single-close">
-              🏗️ 1. Single-Close 0%-Down Note
+              ${getIcon('construction', '', 14)} 1. Single-Close 0%-Down Note
             </button>
             <button class="calc-chip-btn ${this.activeCalc === 'income-shield' ? 'active' : ''}" data-calc="income-shield">
-              💰 2. Income & Deduction Shield
+              ${getIcon('compliance', '', 14)} 2. Income & Deduction Shield
             </button>
             <button class="calc-chip-btn ${this.activeCalc === 'dti-underwriting' ? 'active' : ''}" data-calc="dti-underwriting">
-              📊 3. DTI & GUS Waiver Ratios
+              ${getIcon('activity', '', 14)} 3. DTI & GUS Waiver Ratios
             </button>
             <button class="calc-chip-btn ${this.activeCalc === 'direct-subsidy' ? 'active' : ''}" data-calc="direct-subsidy">
-              ⚡ 4. Direct 1.0% Rate Buydown
+              ${getIcon('sparkles', '', 14)} 4. Direct 1.0% Rate Buydown
             </button>
             <button class="calc-chip-btn ${this.activeCalc === 'draw-schedule' ? 'active' : ''}" data-calc="draw-schedule">
-              📅 5. 5-Stage Milestone Draws
+              ${getIcon('layers', '', 14)} 5. 5-Stage Milestone Draws
             </button>
             <button class="calc-chip-btn ${this.activeCalc === 'cuva-tax' ? 'active' : ''}" data-calc="cuva-tax">
-              🚜 6. Georgia CUVA Tax Squeeze
+              ${getIcon('carbon', '', 14)} 6. Georgia CUVA Tax Squeeze
             </button>
             <button class="calc-chip-btn ${this.activeCalc === 'appraisal-equity' ? 'active' : ''}" data-calc="appraisal-equity">
-              📈 7. Appraised Value Cushion
+              ${getIcon('calculator', '', 14)} 7. Appraised Value Cushion
             </button>
             <button class="calc-chip-btn ${this.activeCalc === 'site-prep' ? 'active' : ''}" data-calc="site-prep">
-              🌲 8. Rural Site & Utilities
+              ${getIcon('radar', '', 14)} 8. Rural Site & Utilities
             </button>
             <button class="calc-chip-btn ${this.activeCalc === 'internal-blueprint' ? 'active' : ''}" data-calc="internal-blueprint">
-              📐 9. Internal Blueprint (N-Ways Built)
+              ${getIcon('design', '', 14)} 9. Internal Blueprint (N-Ways Built)
             </button>
           </div>
         </div>
