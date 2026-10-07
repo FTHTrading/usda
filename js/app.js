@@ -22,6 +22,7 @@ import { USDAHotspots } from './hotspots.js';
 import { USDAGuidedAINavigator } from './guided-ai-navigator.js';
 import { USDAProjectIntakeModal } from './project-intake-modal.js';
 import { USDAAIProjectRunner } from './ai-project-runner.js';
+import { USDAProgramsSuiteView } from './programs-suite-view.js';
 
 class USDAApp {
   constructor() {
@@ -50,6 +51,7 @@ class USDAApp {
 
     // 3. Technical Verification, Calculators & Spatial Engines
     this.modules.calcSuite = new USDACalculatorSuite('calculator-suite-container');
+    this.modules.programs = new USDAProgramsSuiteView('programs-suite-container');
     this.modules.mapRadar = new USDAInteractiveMap('interactive-map-container');
     this.modules.calc = new USDAConstructionCalc('calc-container');
     this.modules.secrets = new USDASecretTricks('secrets-container');
@@ -105,8 +107,10 @@ class USDAApp {
           this.switchTab('build');
         } else if (q.includes('handover') || q.includes('warranty') || q.includes('manual') || q.includes('meter')) {
           this.switchTab('handover');
-        } else if (q.includes('map') || q.includes('satellite') || q.includes('lake') || q.includes('lanier')) {
+        } else if (q.includes('map') || q.includes('satellite') || q.includes('lake') || q.includes('lanier') || q.includes('address') || q.includes('lookup') || q.includes('geocoder')) {
           this.switchTab('map-radar');
+        } else if (q.includes('refinance') || q.includes('refi') || q.includes('multifamily') || q.includes('multi-family') || q.includes('reap') || q.includes('504') || q.includes('538') || q.includes('apartment') || q.includes('duplex')) {
+          this.switchTab('programs');
         } else if (q.includes('ai') || q.includes('workflow') || q.includes('copilot') || q.includes('goal')) {
           this.switchTab('ai-workspace');
         } else if (q.includes('pdf') || q.includes('doc') || q.includes('download') || q.includes('dossier') || q.includes('brief')) {

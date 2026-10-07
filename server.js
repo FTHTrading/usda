@@ -14,6 +14,8 @@ import { fileURLToPath } from 'node:url';
 import { GEORGIA_REGIONS, USDA_DEDUCTION_RULES, USDA_CONSTRUCTION_PARAMS } from './data/georgia-counties.js';
 import { PROJECT_RECORD } from './data/project-record.js';
 import { SECRET_HOTSPOTS, USDA_REGULATORY_SECRETS } from './data/secret-locations.js';
+import { addressGeocoder } from './js/address-geocoder.js';
+import { USDA_PROGRAMS } from './data/usda-programs-data.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -245,6 +247,155 @@ const server = http.createServer(async (req, res) => {
       });
     } catch (err) {
       return sendJson(res, 502, { error: "USGS 3DEP Query failed: " + err.message });
+    }
+  }
+
+  // 5b. All USDA Programs Catalog (Single-Close, Refinance, 504 Repair, 538 MFH, REAP)
+  if (pathname === '/api/v1/programs' && req.method === 'GET') {
+    return sendJson(res, 200, {
+      totalPrograms: USDA_PROGRAMS.length,
+      programs: USDA_PROGRAMS
+    });
+  }
+
+  // 5c. Real-Time Address Lookup & Rural Eligibility Geocoder
+  if ((pathname === '/api/v1/address-lookup') && (req.method === 'GET' || req.method === 'POST')) {
+    try {
+      let query = '';
+      if (req.method === 'GET') {
+        query = parsedUrl.searchParams.get('q') || parsedUrl.searchParams.get('address') || '';
+      } else {
+        const payload = await parseBody(req);
+        query = payload.address || payload.q || payload.query || '';
+      }
+
+      if (!query.trim()) {
+        return sendJson(res, 400, { error: "Address query parameter 'address' or 'q' is required" });
+      }
+
+      const lookupResult = await addressGeocoder.lookup(query.trim());
+      return sendJson(res, 200, lookupResult);
+    } catch (err) {
+      return sendJson(res, 500, { error: "Address lookup failed: " + err.message });
+    }
+  }
+
+  // 5d. Section 502 Streamlined-Assist Refinance Calculator (7 CFR § 3555.251(c))
+  if (pathname === '/api/v1/refinance-calc' && req.method === 'POST') {
+    try {
+      const payload = await parseBody(req);
+      const currentBalance = Number(payload.currentBalance) || 360000;
+      const currentRate = Number(payload.currentRate) || 7.25;
+      const newRate = Number(payload.newRate) || 5.75;
+      const closingCosts = Number(payload.closingCosts) || 8500;
+
+      // Calculate payments
+      const calcPI = (p, rPct, yrs) => {
+        if (p <= 0) return 0;
+        const r = (rPct / 100) / 12;
+        const n = yrs * 12;
+        return (p * (r * Math.pow(1 + r, n))) / (Math.pow(1 + r, n) - 1);
+      };
+
+      const currentPI = calcPI(currentBalance, currentRate, 30);
+      const upfrontFee = currentBalance * 0.01;
+      const newTotalNote = currentBalance + upfrontFee + closingCosts;
+      const newPI = calcPI(newTotalNote, newRate, 30);
+      const monthlySavings = currentPI - newPI;
+      const meetsRule = monthlySavings >= 50.0;
+
+      return sendJson(res, 200, {
+        program: "USDA Section 502 Streamlined-Assist Refinance",
+        citation: "7 CFR § 3555.251(c)",
+        currentLoan: {
+          balance: currentBalance,
+          interestRate: currentRate,
+          monthlyPrincipalAndInterest: Math.round(currentPI * 100) / 100
+        },
+        newRefinanceLoan: {
+          financedNote: Math.round(newTotalNote * 100) / 100,
+          upfrontGuaranteeFee1Pct: Math.round(upfrontFee * 100) / 100,
+          financedClosingCosts: closingCosts,
+          interestRate: newRate,
+          monthlyPrincipalAndInterest: Math.round(newPI * 100) / 100
+        },
+        tangibleNetBenefit: {
+          monthlySavings: Math.round(monthlySavings * 100) / 100,
+          annualSavings: Math.round(monthlySavings * 12 * 100) / 100,
+          statutoryThreshold: 50.00,
+          qualifies: meetsRule,
+          verdict: meetsRule 
+            ? `QUALIFIES: Monthly P&I reduction of $${Math.round(monthlySavings)} exceeds the statutory $50/mo minimum threshold.` 
+            : `DISQUALIFIED: Monthly reduction of $${Math.round(monthlySavings)} is below the $50/mo threshold.`
+        },
+        underwritingPerks: [
+          "No property appraisal required under 7 CFR § 3555.251(c)",
+          "No credit score re-verification required with 12-month on-time payment history",
+          "No debt-to-income (DTI) ratio recalculation",
+          "Closing costs 100% financed into new note with $0 out-of-pocket cash"
+        ]
+      });
+    } catch (err) {
+      return sendJson(res, 400, { error: "Invalid JSON payload: " + err.message });
+    }
+  }
+
+  // 5e. Section 538 Multi-Family Housing Guaranteed Loan Pro-Forma (7 CFR § 3565)
+  if (pathname === '/api/v1/multifamily-proforma' && req.method === 'POST') {
+    try {
+      const payload = await parseBody(req);
+      const units = Number(payload.units) || 12;
+      const costPerUnit = Number(payload.costPerUnit) || 145000;
+      const rentPerUnit = Number(payload.rentPerUnit) || 1250;
+      const opexRatio = Number(payload.opexRatio) || 0.35;
+      const interestRate = Number(payload.interestRate) || 6.50;
+
+      const totalDevCost = units * costPerUnit;
+      const maxLoan90Pct = totalDevCost * 0.90;
+      const sponsorEquity10Pct = totalDevCost * 0.10;
+
+      const grossPotentialRent = units * rentPerUnit * 12;
+      const effectiveGrossIncome = grossPotentialRent * 0.95; // 5% vacancy
+      const operatingExpenses = effectiveGrossIncome * opexRatio;
+      const netOperatingIncome = effectiveGrossIncome - operatingExpenses;
+
+      const r = (interestRate / 100) / 12;
+      const n = 40 * 12; // 40-year amortization!
+      const monthlyPI = (maxLoan90Pct * (r * Math.pow(1 + r, n))) / (Math.pow(1 + r, n) - 1);
+      const annualDebtService = monthlyPI * 12;
+      const dscr = netOperatingIncome / annualDebtService;
+
+      return sendJson(res, 200, {
+        program: "USDA Section 538 Multi-Family Housing Guaranteed Loan",
+        statute: "7 CFR Part 3565",
+        development: {
+          units,
+          costPerUnit,
+          totalDevelopmentCost: totalDevCost,
+          loanAmount90PctLtv: Math.round(maxLoan90Pct),
+          requiredEquity10Pct: Math.round(sponsorEquity10Pct),
+          amortizationYears: 40
+        },
+        operatingProforma: {
+          grossPotentialRent,
+          effectiveGrossIncome: Math.round(effectiveGrossIncome),
+          operatingExpenses: Math.round(operatingExpenses),
+          netOperatingIncome: Math.round(netOperatingIncome),
+          annualDebtService: Math.round(annualDebtService),
+          monthlyDebtService: Math.round(monthlyPI),
+          netCashFlow: Math.round(netOperatingIncome - annualDebtService)
+        },
+        debtServiceCoverageRatio: {
+          dscr: Math.round(dscr * 100) / 100,
+          mandatoryMinimum: 1.15,
+          qualifies: dscr >= 1.15,
+          verdict: dscr >= 1.15 
+            ? `APPROVED: DSCR of ${dscr.toFixed(2)}x exceeds the mandatory 1.15x threshold.`
+            : `DEFICIENT: DSCR of ${dscr.toFixed(2)}x is below the 1.15x threshold.`
+        }
+      });
+    } catch (err) {
+      return sendJson(res, 400, { error: "Invalid JSON payload: " + err.message });
     }
   }
 

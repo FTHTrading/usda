@@ -32,7 +32,11 @@ export const OFFICIAL_DOCUMENTS = [
   { id: "permit-pack", category: "deliverables", number: "11", title: "Dawson County Building & Land Disturbance Permit Pack", docCode: "DAW-BLD-2026", preparer: "Dawson Planning & Development", pages: "County Permit Package" },
   { id: "handover", category: "deliverables", number: "12", title: "Building Handover & Operations Building Pack", docCode: "HANDOVER-2026", preparer: "Blue Ridge Craftsman Builders LLC", pages: "O&M Manuals & Warranties" },
   { id: "cfr-3555", category: "books", number: "13", title: "7 CFR Part 3555 Federal Rulebook Reference Guide", docCode: "7 CFR § 3555", preparer: "Federal Register / RHS", pages: "Statutory Law Manual" },
-  { id: "ga-codes", category: "books", number: "14", title: "Georgia State Minimum Standard Codes Construction Guide", docCode: "GA-IRC-2018", preparer: "Georgia Dept. of Community Affairs", pages: "State Code Handbook" }
+  { id: "ga-codes", category: "books", number: "14", title: "Georgia State Minimum Standard Codes Construction Guide", docCode: "GA-IRC-2018", preparer: "Georgia Dept. of Community Affairs", pages: "State Code Handbook" },
+  { id: "rd-3555-11", category: "forms", number: "15", title: "USDA Form RD 3555-11: Streamlined-Assist Refinance Checklist", docCode: "FORM RD 3555-11", preparer: "Highland Rural Community Bank (NMLS #482910)", pages: "Refinance Underwriting Dossier" },
+  { id: "rd-504-1", category: "forms", number: "16", title: "USDA Form RD 504-1: Section 504 Home Repair Loan & Grant Voucher", docCode: "FORM RD 504-1", preparer: "USDA Rural Housing Service", pages: "1% Repair & Grant Voucher" },
+  { id: "rd-3560-1", category: "forms", number: "17", title: "USDA Form RD 3560-1: Multi-Family Housing Project Pro-Forma", docCode: "FORM RD 3560-1", preparer: "UnyKorn Rural Capital Partners LLC", pages: "Section 538 / 515 MFH Pro-Forma" },
+  { id: "rd-4280-1", category: "forms", number: "18", title: "USDA Form RD 4280-1: REAP Clean Energy & Solar Grant Pack", docCode: "FORM RD 4280-1", preparer: "Elena Rostova, CEM (Highland Energy)", pages: "50% REAP Grant Dossier" }
 ];
 
 export class USDAPDFEngine {
@@ -94,8 +98,8 @@ export class USDAPDFEngine {
           <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 0.75rem; margin-bottom: 0.75rem; border-bottom: 1px solid var(--glass-border); padding-bottom: 0.75rem;">
             <div style="display: flex; align-items: center; gap: 0.4rem;">
               <span style="font-size: 0.72rem; font-weight: 800; color: var(--text-dim); text-transform: uppercase;">Category:</span>
-              <button class="filter-tab-pill ${this.filterCategory === 'all' ? 'active' : ''}" data-cat="all">All (14)</button>
-              <button class="filter-tab-pill ${this.filterCategory === 'forms' ? 'active' : ''}" data-cat="forms">USDA Forms (5)</button>
+              <button class="filter-tab-pill ${this.filterCategory === 'all' ? 'active' : ''}" data-cat="all">All (18)</button>
+              <button class="filter-tab-pill ${this.filterCategory === 'forms' ? 'active' : ''}" data-cat="forms">USDA Forms (9)</button>
               <button class="filter-tab-pill ${this.filterCategory === 'deliverables' ? 'active' : ''}" data-cat="deliverables">Deliverables (6)</button>
               <button class="filter-tab-pill ${this.filterCategory === 'books' ? 'active' : ''}" data-cat="books">Handbooks & Codes (3)</button>
             </div>
@@ -172,6 +176,10 @@ export class USDAPDFEngine {
       case 'handover': return getIcon('handover', '', 14);
       case 'cfr-3555': return getIcon('overview', '', 14);
       case 'ga-codes': return getIcon('design', '', 14);
+      case 'rd-3555-11': return getIcon('refresh', '', 14);
+      case 'rd-504-1': return getIcon('layers', '', 14);
+      case 'rd-3560-1': return getIcon('construction', '', 14);
+      case 'rd-4280-1': return getIcon('carbon', '', 14);
       default: return getIcon('documents', '', 14);
     }
   }

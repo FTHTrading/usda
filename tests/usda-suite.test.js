@@ -7,6 +7,8 @@ import { GEORGIA_REGIONS, USDA_DEDUCTION_RULES, USDA_CONSTRUCTION_PARAMS } from 
 import { SECRET_HOTSPOTS, USDA_REGULATORY_SECRETS } from '../data/secret-locations.js';
 import { OFFICIAL_DOCUMENTS } from '../js/pdf-engine.js';
 
+const BASE_URL = process.env.TEST_BASE_URL || 'http://localhost:4080';
+
 describe('1. Regional Jurisdiction & 2026 Income Caps', () => {
   test('Dawson County has correct Atlanta MSA 2026 caps ($135,500 / $178,900)', () => {
     const dawson = GEORGIA_REGIONS.find(r => r.id === 'dawson');
@@ -342,8 +344,8 @@ describe('13. Headless REST API Gateway & Federal Integration Endpoints', () => 
 });
 
 describe('14. Institutional Documents, Official Forms & Books Suite', () => {
-  test('Contains all 14 official USDA statutory forms, deliverables, and technical handbooks', () => {
-    assert.equal(OFFICIAL_DOCUMENTS.length, 14);
+  test('Contains all 18 official USDA statutory forms, deliverables, and technical handbooks', () => {
+    assert.equal(OFFICIAL_DOCUMENTS.length, 18);
     const formIds = OFFICIAL_DOCUMENTS.map(d => d.id);
     assert.ok(formIds.includes('dossier'), 'Must include Form RD 3555-SC');
     assert.ok(formIds.includes('hb-3555'), 'Must include HB-1-3555 Field Guide');
@@ -354,6 +356,10 @@ describe('14. Institutional Documents, Official Forms & Books Suite', () => {
     assert.ok(formIds.includes('brief'), 'Must include Structured Project Brief');
     assert.ok(formIds.includes('cfr-3555'), 'Must include 7 CFR § 3555 Rulebook');
     assert.ok(formIds.includes('ga-codes'), 'Must include GA Codes Guide');
+    assert.ok(formIds.includes('rd-3555-11'), 'Must include Form RD 3555-11 Refinance');
+    assert.ok(formIds.includes('rd-504-1'), 'Must include Form RD 504-1 Repair');
+    assert.ok(formIds.includes('rd-3560-1'), 'Must include Form RD 3560-1 Multi-Family');
+    assert.ok(formIds.includes('rd-4280-1'), 'Must include Form RD 4280-1 REAP');
   });
 
   test('All documents have valid official docCodes and designated preparers', () => {
@@ -362,6 +368,58 @@ describe('14. Institutional Documents, Official Forms & Books Suite', () => {
       assert.ok(doc.preparer && doc.preparer.length > 2, `${doc.id} must have preparer`);
       assert.ok(['forms', 'deliverables', 'books'].includes(doc.category), `${doc.id} must have valid category`);
     });
+  });
+});
+
+describe('15. Address Geocoding & Rural Eligibility Engine', () => {
+  test('GET /api/v1/address-lookup accurately resolves rural Dawsonville Lake parcel', async () => {
+    const res = await fetch(`${BASE_URL}/api/v1/address-lookup?address=${encodeURIComponent('428 Chestatee Overlook Trail, Dawsonville, GA')}`);
+    assert.equal(res.status, 200);
+    const data = await res.json();
+    assert.equal(data.eligibility.status, 'ELIGIBLE');
+    assert.ok(data.elevation.feetMSL > 1070.0, 'Must be cleared above Lake Lanier 1,070-ft buffer');
+    assert.equal(data.county.id, 'dawson');
+    assert.equal(data.county.incomeCap1to4, 135500);
+    assert.ok(data.programs.length >= 6);
+  });
+
+  test('POST /api/v1/address-lookup correctly flags metro Alpharetta as DISQUALIFIED', async () => {
+    const res = await fetch(`${BASE_URL}/api/v1/address-lookup`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ address: '300 North Point Pkwy, Alpharetta, GA' })
+    });
+    assert.equal(res.status, 200);
+    const data = await res.json();
+    assert.equal(data.eligibility.status, 'DISQUALIFIED');
+  });
+});
+
+describe('16. Streamlined Refinance & Multi-Family Housing Underwriting', () => {
+  test('POST /api/v1/refinance-calc enforces statutory $50/month tangible benefit rule', async () => {
+    const res = await fetch(`${BASE_URL}/api/v1/refinance-calc`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ currentBalance: 360000, currentRate: 7.25, newRate: 5.75, closingCosts: 8500 })
+    });
+    assert.equal(res.status, 200);
+    const data = await res.json();
+    assert.equal(data.tangibleNetBenefit.qualifies, true);
+    assert.ok(data.tangibleNetBenefit.monthlySavings > 50.0);
+    assert.ok(data.underwritingPerks.some(p => p.includes('No property appraisal')));
+  });
+
+  test('POST /api/v1/multifamily-proforma models 90% LTV 40-year amortization and DSCR', async () => {
+    const res = await fetch(`${BASE_URL}/api/v1/multifamily-proforma`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ units: 16, costPerUnit: 130000, rentPerUnit: 1450, opexRatio: 0.35, interestRate: 6.25 })
+    });
+    assert.equal(res.status, 200);
+    const data = await res.json();
+    assert.equal(data.development.amortizationYears, 40);
+    assert.equal(data.development.loanAmount90PctLtv, Math.round(16 * 130000 * 0.90));
+    assert.ok(data.debtServiceCoverageRatio.dscr > 1.0);
   });
 });
 

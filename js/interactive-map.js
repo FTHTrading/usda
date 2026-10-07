@@ -1,6 +1,9 @@
 // Interactive Leaflet GIS Radar & Satellite Map Engine
 // Features: Real-time satellite imagery, USDA boundary polygons, Lake Lanier USACE buffer, secret hotspot pins, and click-to-inspect GPS radar.
 import { SECRET_HOTSPOTS } from '../data/secret-locations.js';
+import { addressGeocoder, ADDRESS_PRESETS } from './address-geocoder.js';
+import { PROJECT_RECORD } from '../data/project-record.js';
+import { getIcon } from './icons.js';
 
 export class USDAInteractiveMap {
   constructor(containerId) {
@@ -39,6 +42,41 @@ export class USDAInteractiveMap {
             <button class="fly-btn" data-loc="alpharetta">🚫 Alpharetta (Metro Red Zone)</button>
             <button class="fly-btn" data-loc="reset">🗺️ Reset View</button>
           </div>
+        </div>
+
+        <!-- Live Address Search & Rural Verification Engine Bar -->
+        <div class="map-address-search-card glass-panel-card" style="margin-bottom: 1rem; padding: 1.15rem 1.35rem;">
+          <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 0.65rem;">
+            <div style="display: flex; align-items: center; gap: 0.5rem;">
+              <span class="status-badge-glass badge-green">● LIVE PARCEL & ADDRESS RADAR</span>
+              <strong style="color: #0f172a; font-size: 0.95rem;">USDA Rural Eligibility & Elevation Geocoder</strong>
+            </div>
+            <span style="font-size: 0.72rem; color: var(--text-dim); font-family: var(--font-mono);">7 CFR § 3555 / USGS 3DEP Elevation Check</span>
+          </div>
+
+          <div style="display: flex; gap: 0.65rem; flex-wrap: wrap;">
+            <div class="global-search-wrapper" style="flex: 1; min-width: 280px; background: rgba(255,255,255,0.95); border: 1px solid var(--glass-border); border-radius: 8px; padding: 0.2rem 0.75rem; display: flex; align-items: center;">
+              <span class="search-symbol" style="margin-right: 0.5rem; color: var(--text-dim);">${getIcon('radar', '', 16)}</span>
+              <input type="text" id="inp-map-address-search" placeholder="Type any address, parcel, or city (e.g. 428 Chestatee Overlook Trail, Dawsonville, GA)..." style="width: 100%; border: none; background: transparent; font-size: 0.88rem; outline: none; padding: 0.5rem 0;" />
+            </div>
+            <button class="btn-primary" id="btn-run-address-lookup" style="background: #059669; color: #fff; padding: 0.6rem 1.4rem; font-weight: 700; border-radius: 8px; cursor: pointer;">
+              Verify Address →
+            </button>
+          </div>
+
+          <!-- Preset Quick Chips -->
+          <div style="display: flex; align-items: center; gap: 0.4rem; margin-top: 0.75rem; flex-wrap: wrap;">
+            <span style="font-size: 0.72rem; font-weight: 800; color: var(--text-dim); text-transform: uppercase;">Presets:</span>
+            <button class="filter-tab-pill" data-addr-preset="0">🌊 Dawsonville Lake</button>
+            <button class="filter-tab-pill" data-addr-preset="1">🍇 Dahlonega Wine</button>
+            <button class="filter-tab-pill" data-addr-preset="2">⛰️ Jasper Mountain</button>
+            <button class="filter-tab-pill" data-addr-preset="3">🌲 Blue Ridge Overlook</button>
+            <button class="filter-tab-pill" data-addr-preset="4">🏖️ Gainesville Shore</button>
+            <button class="filter-tab-pill" data-addr-preset="5" style="border-color: rgba(239, 68, 68, 0.35); color: #dc2626;">🚫 Alpharetta (Metro)</button>
+          </div>
+
+          <!-- Live Lookup Result Banner -->
+          <div id="address-lookup-results-box" style="margin-top: 0.85rem; display: none;"></div>
         </div>
 
         <div class="map-view-container">
@@ -439,5 +477,182 @@ export class USDAInteractiveMap {
         }
       });
     });
+
+    // Address Lookup Handlers
+    const searchInp = this.container.querySelector('#inp-map-address-search');
+    const searchBtn = this.container.querySelector('#btn-run-address-lookup');
+
+    const triggerLookup = () => {
+      const q = searchInp?.value || '';
+      if (q.trim()) this.handleAddressLookup(q.trim());
+    };
+
+    searchBtn?.addEventListener('click', triggerLookup);
+    searchInp?.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter') {
+        e.preventDefault();
+        triggerLookup();
+      }
+    });
+
+    // Preset buttons
+    this.container.querySelectorAll('[data-addr-preset]').forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        const idx = parseInt(e.currentTarget.getAttribute('data-addr-preset'), 10);
+        const preset = ADDRESS_PRESETS[idx];
+        if (preset) {
+          if (searchInp) searchInp.value = preset.address;
+          this.handleAddressLookup(preset.address);
+        }
+      });
+    });
+  }
+
+  async handleAddressLookup(query) {
+    const resultsBox = this.container.querySelector('#address-lookup-results-box');
+    if (!resultsBox) return;
+
+    resultsBox.style.display = 'block';
+    resultsBox.innerHTML = `
+      <div style="padding: 1rem; background: #f8fafc; border: 1px solid var(--glass-border); border-radius: 8px; display: flex; align-items: center; gap: 0.5rem; font-size: 0.85rem; color: var(--text-dim);">
+        <span class="radar-live-dot"></span> Ingesting coordinates and querying USGS 3DEP elevation & USDA boundary...
+      </div>
+    `;
+
+    try {
+      const result = await addressGeocoder.lookup(query);
+      const isEligible = result.eligibility.status === 'ELIGIBLE';
+      const isDisqualified = result.eligibility.status === 'DISQUALIFIED';
+
+      resultsBox.innerHTML = `
+        <div style="padding: 1.15rem; background: #fff; border: 1px solid var(--glass-border); border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.04);">
+          <div style="display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 0.75rem; margin-bottom: 0.75rem;">
+            <div>
+              <div style="display: flex; align-items: center; gap: 0.5rem;">
+                <h4 style="font-size: 1.05rem; font-weight: 800; color: #0f172a; margin: 0;">${result.resolvedAddress}</h4>
+                <span class="status-badge-glass ${isEligible ? 'badge-green' : isDisqualified ? 'badge-red' : 'badge-amber'}">
+                  ${result.eligibility.label}
+                </span>
+              </div>
+              <p style="font-size: 0.75rem; color: var(--text-dim); margin: 0.2rem 0 0;">
+                GPS: <strong>${result.coordinates.lat}° N, ${result.coordinates.lng}° W</strong> · Jurisdiction: <strong>${result.county.name}</strong> (${result.county.metroStatus})
+              </p>
+            </div>
+
+            <div style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
+              <button class="btn-primary" id="btn-apply-searched-address" style="background: #059669; color: #fff; padding: 0.45rem 0.95rem; font-size: 0.8rem; border-radius: 6px;">
+                ✓ Set as Active Project Parcel
+              </button>
+              <button class="btn-secondary" id="btn-fly-searched-address" style="padding: 0.45rem 0.95rem; font-size: 0.8rem; border-radius: 6px;">
+                ✈ Fly Map to Location
+              </button>
+            </div>
+          </div>
+
+          <!-- 4-Stat Strip -->
+          <div class="radar-data-grid" style="margin-bottom: 0.75rem;">
+            <div class="r-data-box">
+              <span class="r-k">USGS 3DEP Elevation:</span>
+              <span class="r-v ${result.elevation.cleared ? 'text-emerald font-bold' : 'text-amber'}">
+                ${result.elevation.feetMSL} ft MSL (${result.elevation.cleared ? `+${result.elevation.cushionFeet} ft above Lake Lanier` : 'At or below 1,070 ft'})
+              </span>
+            </div>
+            <div class="r-data-box">
+              <span class="r-k">2026 Household Cap (1-4):</span>
+              <span class="r-v font-bold">$${result.county.incomeCap1to4.toLocaleString()}</span>
+            </div>
+            <div class="r-data-box">
+              <span class="r-k">Lake Lanier Proximity:</span>
+              <span class="r-v text-blue">~${result.elevation.proximityMiles} miles</span>
+            </div>
+            <div class="r-data-box">
+              <span class="r-k">Georgia CUVA Tax Squeeze:</span>
+              <span class="r-v text-emerald font-bold">${result.county.cuvaSavingsRate} Reduction</span>
+            </div>
+          </div>
+
+          <!-- Matching Programs Bar -->
+          <div style="border-top: 1px solid var(--glass-border); padding-top: 0.65rem;">
+            <span style="font-size: 0.72rem; font-weight: 800; color: var(--text-dim); text-transform: uppercase; margin-bottom: 0.35rem; display: block;">
+              Matching USDA Programs:
+            </span>
+            <div style="display: flex; gap: 0.4rem; flex-wrap: wrap;">
+              ${result.programs.filter(p => p.isEligible).map(p => `
+                <span class="badge-nav-pill pill-emerald" title="${p.suitabilityNote}" style="font-size: 0.7rem; padding: 0.25rem 0.6rem;">
+                  ✓ ${p.title}
+                </span>
+              `).join('')}
+              ${result.programs.filter(p => !p.isEligible).map(p => `
+                <span class="badge-nav-pill" style="opacity: 0.45; text-decoration: line-through; font-size: 0.7rem; padding: 0.25rem 0.6rem;">
+                  ✕ ${p.title}
+                </span>
+              `).join('')}
+            </div>
+          </div>
+        </div>
+      `;
+
+      // Wire action buttons
+      resultsBox.querySelector('#btn-fly-searched-address')?.addEventListener('click', () => {
+        if (this.map) {
+          this.map.flyTo([result.coordinates.lat, result.coordinates.lng], 14);
+          this.handleMapClick(result.coordinates.lat, result.coordinates.lng);
+        }
+      });
+
+      resultsBox.querySelector('#btn-apply-searched-address')?.addEventListener('click', () => {
+        PROJECT_RECORD.address = result.resolvedAddress;
+        PROJECT_RECORD.jurisdiction.county = result.county.name;
+        PROJECT_RECORD.coordinates = {
+          lat: result.coordinates.lat,
+          lng: result.coordinates.lng,
+          elevationMSL: `${result.elevation.feetMSL} ft`
+        };
+
+        // Show toast
+        this.showToast(`✓ Parcel Applied! Address set to ${result.resolvedAddress}`);
+
+        // Dispatch update event
+        window.dispatchEvent(new CustomEvent('usda-project-updated', { detail: PROJECT_RECORD }));
+
+        // Center map
+        if (this.map) {
+          this.map.flyTo([result.coordinates.lat, result.coordinates.lng], 14);
+          this.handleMapClick(result.coordinates.lat, result.coordinates.lng);
+        }
+      });
+
+      // Fly map directly on search completion
+      if (this.map) {
+        this.map.flyTo([result.coordinates.lat, result.coordinates.lng], 13);
+        this.handleMapClick(result.coordinates.lat, result.coordinates.lng);
+      }
+    } catch (e) {
+      resultsBox.innerHTML = `
+        <div style="padding: 1rem; background: rgba(239,68,68,0.08); border: 1px solid rgba(239,68,68,0.25); border-radius: 8px; color: #dc2626; font-size: 0.85rem;">
+          ✖ Address lookup failed: ${e.message}. Please try one of the presets or enter a standard City, County, or ZIP.
+        </div>
+      `;
+    }
+  }
+
+  showToast(msg) {
+    const existing = document.getElementById('usda-live-toast');
+    if (existing) existing.remove();
+
+    const toast = document.createElement('div');
+    toast.id = 'usda-live-toast';
+    toast.className = 'usda-toast-notice';
+    toast.innerHTML = `<span>${getIcon('checkCircle', '', 16)}</span> <span>${msg}</span>`;
+    document.body.appendChild(toast);
+
+    setTimeout(() => {
+      toast.classList.add('visible');
+    }, 10);
+
+    setTimeout(() => {
+      toast.classList.remove('visible');
+      setTimeout(() => toast.remove(), 300);
+    }, 3800);
   }
 }
